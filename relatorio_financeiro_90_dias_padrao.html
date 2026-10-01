@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório financeiro — julho a setembro de 2026</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e4e8f0;--accent:#ec7000;--accent-soft:#fff1e7;--blue:#2563eb;--green:#168354;--purple:#7c3aed;--soft:#f8fafc}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+    .wrap{max-width:1160px;margin:auto;padding:28px 18px 60px}
+    .hero,.section{background:var(--card);border:1px solid var(--line);border-radius:20px}
+    .hero{padding:27px;background:linear-gradient(135deg,#fff,#fff5ee)}
+    h1{font-size:29px;margin:0 0 8px}
+    h2{font-size:21px;margin:0 0 7px}
+    p{line-height:1.5}
+    .sub,.hint{color:var(--muted);margin:0}
+    .hint{font-size:13px}
+    .section{margin-top:16px;padding:21px}
+    .kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:17px}
+    .kpi{padding:15px;border:1px solid var(--line);border-radius:15px;background:#fff}
+    .kpi small{display:block;color:var(--muted);margin-bottom:7px}
+    .kpi strong{font-size:21px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 13px}
+    .tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;color:var(--ink);font-weight:750;cursor:pointer}
+    .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+    .category{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px;cursor:pointer;transition:.18s}
+    .category:hover,.category.active{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-1px)}
+    .category .row{display:flex;gap:10px;justify-content:space-between;align-items:start}
+    .category b{font-size:14px}
+    .category strong{font-size:17px;white-space:nowrap}
+    .category small{display:block;margin-top:5px;color:var(--muted)}
+    .track{height:7px;background:#e9edf3;border-radius:9px;overflow:hidden;margin-top:11px}
+    .fill{height:100%;background:var(--accent);border-radius:inherit}
+    .detail{margin-top:17px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+    .detail-head{display:flex;justify-content:space-between;gap:15px;align-items:start}
+    .detail h3{margin:0 0 4px;font-size:18px}
+    .detail-total{font-size:22px;font-weight:800;white-space:nowrap}
+    .bars{height:150px;display:flex;align-items:end;gap:24px;padding:20px 6px 0;margin:8px 0 15px;border-bottom:1px solid var(--line)}
+    .bar-group{flex:1;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:6px;min-width:70px}
+    .bar{width:50px;max-width:85%;min-height:3px;background:var(--blue);border-radius:9px 9px 3px 3px}
+    .bar.food{background:var(--green)}
+    .bar.other{background:var(--purple)}
+    .bar.card{background:var(--accent)}
+    .bar-val{font-size:12px;font-weight:800}
+    .bar-label{font-size:13px;color:var(--muted)}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:14px}
+    th{color:#475467;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+    td.num,th.num{text-align:right}
+    .total-row td{font-weight:800;border-bottom:0}
+    .topnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .topnav a{display:inline-block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:#fff;font-weight:700;font-size:13px}
+    .topnav a:hover{border-color:var(--accent);color:var(--accent)}
+    .note{margin-top:14px;padding:12px 14px;border-radius:12px;background:#fff8ec;border-left:4px solid var(--accent);font-size:13px}
+    .month-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:15px}
+    .month-box{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}
+    .month-box .row{display:flex;justify-content:space-between;gap:12px}
+    .month-box strong{font-size:18px}
+    .footer{color:var(--muted);font-size:13px;margin-top:18px}
+    @media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.category-grid{grid-template-columns:1fr 1fr}.month-summary{grid-template-columns:1fr}}
+    @media(max-width:520px){.wrap{padding:16px 12px 35px}.hero,.section{border-radius:16px;padding:16px}h1{font-size:24px}.kpis,.category-grid{grid-template-columns:1fr}.bars{gap:10px}.bar{width:36px}.detail-head{display:block}.detail-total{margin-top:7px}table{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Relatório financeiro dos últimos 90 dias</h1>
+      <p class="sub">Conta corrente + poupança consolidadas · julho, agosto e setembro de 2026.</p>
+      <div class="kpis">
+        <div class="kpi"><small>Total analisado</small><strong id="kTotal"></strong></div>
+        <div class="kpi"><small>Cartão + seguros</small><strong id="kCard"></strong></div>
+        <div class="kpi"><small>Transferências</small><strong id="kPeople"></strong></div>
+        <div class="kpi"><small>Alimentação</small><strong id="kFood"></strong></div>
+        <div class="kpi"><small>Outros gastos</small><strong id="kOther"></strong></div>
+      </div>
+      <div class="topnav">
+        <a href="#visao">Visão geral</a>
+        <a href="#cartao">Cartão</a>
+        <a href="#pessoas">Pessoas</a>
+        <a href="#alimentacao">Alimentação</a>
+        <a href="#outros">Outros gastos</a>
+      </div>
+    </section>
+
+    <section class="section" id="visao">
+      <h2>Visão geral</h2>
+      <p class="hint">Comparação simples entre os três meses, já juntando conta corrente e poupança.</p>
+      <div class="month-summary" id="monthSummary"></div>
+      <div class="note">TBI entre conta corrente e poupança foi tratado como movimentação interna e não como gasto. Julho começa em 03/07 na conta corrente.</div>
+    </section>
+
+    <section class="section" id="cartao">
+      <h2>Cartão de crédito</h2>
+      <p class="hint">Pagamentos da fatura Itaú Gold na poupança + seguros cobrados na conta corrente.</p>
+      <div class="tabs" id="cardTabs"></div>
+      <div id="cardContent"></div>
+      <div class="detail" id="cardDetail"></div>
+    </section>
+
+    <section class="section" id="pessoas">
+      <h2>Transferências para pessoas</h2>
+      <p class="hint">Clique em uma pessoa para comparar julho, agosto e setembro e ver as transferências uma por uma.</p>
+      <div class="tabs" id="peopleMonthTabs"></div>
+      <div id="peopleContent"></div>
+      <div class="detail" id="peopleDetail"></div>
+      <div class="note">Regra usada: todo “Maria J” de R$ 300 foi classificado como <b>Maria José</b>; os demais “Maria J” como <b>Maria Julia</b>.</div>
+    </section>
+
+    <section class="section" id="alimentacao">
+      <h2>Alimentação</h2>
+      <p class="hint">Clique em um estabelecimento/grupo para comparar os três meses e ver cada compra.</p>
+      <div class="tabs" id="foodMonthTabs"></div>
+      <div id="foodContent"></div>
+      <div class="detail" id="foodDetail"></div>
+    </section>
+
+    <section class="section" id="outros">
+      <h2>Outros gastos</h2>
+      <p class="hint">Tudo que não é cartão, transferência pessoal ou alimentação.</p>
+      <div class="tabs" id="otherMonthTabs"></div>
+      <div id="otherContent"></div>
+      <div class="detail" id="otherDetail"></div>
+    </section>
+
+    <p class="footer">Fonte consolidada: Extrato da Conta Corrente + Extrato da Poupança.</p>
+  </main>
+
+<script>
+const D = {"months": ["Julho", "Agosto", "Setembro"], "card_month": {"Julho": 6145.32, "Agosto": 6114.26, "Setembro": 4404.6}, "card_payments": {"Julho": [["03/07", 427.32], ["06/07", 1200.0], ["13/07", 800.0], ["22/07", 800.0], ["23/07", 1000.0], ["27/07", 500.0], ["31/07", 1387.82]], "Agosto": [["03/08", 111.88], ["03/08", 700.0], ["07/08", 700.0], ["10/08", 1000.0], ["20/08", 1000.0], ["21/08", 1000.0], ["24/08", 1571.87]], "Setembro": [["01/09", 686.09], ["04/09", 600.0], ["08/09", 688.0], ["15/09", 600.0], ["21/09", 600.0], ["22/09", 1000.0], ["25/09", 200.0]]}, "card_insurance": {"Julho": 30.18, "Agosto": 30.51, "Setembro": 30.51}, "people": {"Maria José": {"months": {"Julho": 2100, "Agosto": 1200, "Setembro": 1200}, "total": 4500, "transactions": [{"date": "03/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "07/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "10/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "14/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "17/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "24/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "31/07", "month": "Julho", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "07/08", "month": "Agosto", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "14/08", "month": "Agosto", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "21/08", "month": "Agosto", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "27/08", "month": "Agosto", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "04/09", "month": "Setembro", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "11/09", "month": "Setembro", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "18/09", "month": "Setembro", "value": 300, "refund": false, "desc": "Transferência"}, {"date": "25/09", "month": "Setembro", "value": 300, "refund": false, "desc": "Transferência"}]}, "Maria Julia": {"months": {"Julho": 3022, "Agosto": 2390, "Setembro": 3252}, "total": 8664, "transactions": [{"date": "03/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "06/07", "month": "Julho", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "06/07", "month": "Julho", "value": 138, "refund": false, "desc": "Transferência"}, {"date": "08/07", "month": "Julho", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "13/07", "month": "Julho", "value": 172, "refund": false, "desc": "Transferência"}, {"date": "13/07", "month": "Julho", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "13/07", "month": "Julho", "value": 118, "refund": false, "desc": "Transferência"}, {"date": "13/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "15/07", "month": "Julho", "value": 150, "refund": false, "desc": "Transferência"}, {"date": "15/07", "month": "Julho", "value": 150, "refund": false, "desc": "Transferência"}, {"date": "16/07", "month": "Julho", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "17/07", "month": "Julho", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "20/07", "month": "Julho", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "20/07", "month": "Julho", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "20/07", "month": "Julho", "value": 12, "refund": false, "desc": "Transferência"}, {"date": "21/07", "month": "Julho", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "21/07", "month": "Julho", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "21/07", "month": "Julho", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "21/07", "month": "Julho", "value": 290, "refund": true, "desc": "Devolução/entrada"}, {"date": "24/07", "month": "Julho", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "27/07", "month": "Julho", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "27/07", "month": "Julho", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "28/07", "month": "Julho", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "28/07", "month": "Julho", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "29/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "30/07", "month": "Julho", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "30/07", "month": "Julho", "value": 86, "refund": false, "desc": "Transferência"}, {"date": "04/08", "month": "Agosto", "value": 150, "refund": false, "desc": "Transferência"}, {"date": "04/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "04/08", "month": "Agosto", "value": 140, "refund": false, "desc": "Transferência"}, {"date": "05/08", "month": "Agosto", "value": 80, "refund": false, "desc": "Transferência"}, {"date": "06/08", "month": "Agosto", "value": 12, "refund": false, "desc": "Transferência"}, {"date": "06/08", "month": "Agosto", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "10/08", "month": "Agosto", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "11/08", "month": "Agosto", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "18/08", "month": "Agosto", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "21/08", "month": "Agosto", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "25/08", "month": "Agosto", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "25/08", "month": "Agosto", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "26/08", "month": "Agosto", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "31/08", "month": "Agosto", "value": 134, "refund": false, "desc": "Transferência"}, {"date": "31/08", "month": "Agosto", "value": 172, "refund": false, "desc": "Transferência"}, {"date": "31/08", "month": "Agosto", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "01/09", "month": "Setembro", "value": 200, "refund": false, "desc": "Transferência"}, {"date": "01/09", "month": "Setembro", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "03/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "04/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "04/09", "month": "Setembro", "value": 100, "refund": false, "desc": "Transferência"}, {"date": "08/09", "month": "Setembro", "value": 252, "refund": false, "desc": "Transferência"}, {"date": "08/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "08/09", "month": "Setembro", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "14/09", "month": "Setembro", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "14/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "14/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "15/09", "month": "Setembro", "value": 290, "refund": false, "desc": "Transferência"}, {"date": "17/09", "month": "Setembro", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "21/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "21/09", "month": "Setembro", "value": 92, "refund": false, "desc": "Transferência"}, {"date": "21/09", "month": "Setembro", "value": 150, "refund": false, "desc": "Transferência"}, {"date": "21/09", "month": "Setembro", "value": 200, "refund": false, "desc": "Transferência"}, {"date": "22/09", "month": "Setembro", "value": 190, "refund": false, "desc": "Transferência"}, {"date": "28/09", "month": "Setembro", "value": 132, "refund": false, "desc": "Transferência"}, {"date": "28/09", "month": "Setembro", "value": 250, "refund": false, "desc": "Transferência"}]}, "José An...": {"months": {"Julho": 480, "Agosto": 600, "Setembro": 480}, "total": 1560, "transactions": [{"date": "03/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "10/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "17/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "24/07", "month": "Julho", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "03/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "07/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "17/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "21/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "28/08", "month": "Agosto", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "08/09", "month": "Setembro", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "14/09", "month": "Setembro", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "18/09", "month": "Setembro", "value": 120, "refund": false, "desc": "Transferência"}, {"date": "25/09", "month": "Setembro", "value": 120, "refund": false, "desc": "Transferência"}]}, "FN Trei...": {"months": {"Julho": 68, "Agosto": 0, "Setembro": 0}, "total": 68, "transactions": [{"date": "16/07", "month": "Julho", "value": 30, "refund": false, "desc": "Transferência"}, {"date": "16/07", "month": "Julho", "value": 38, "refund": false, "desc": "Transferência"}]}, "Keslen": {"months": {"Julho": 0, "Agosto": 30, "Setembro": 0}, "total": 30, "transactions": [{"date": "24/08", "month": "Agosto", "value": 30, "refund": false, "desc": "Transferência"}]}, "Gabriel": {"months": {"Julho": 0, "Agosto": 0, "Setembro": 200}, "total": 200, "transactions": [{"date": "17/08", "month": "Agosto", "value": 50, "refund": false, "desc": "Transferência"}, {"date": "17/08", "month": "Agosto", "value": 50, "refund": true, "desc": "Devolução/entrada"}, {"date": "01/09", "month": "Setembro", "value": 1000, "refund": false, "desc": "Transferência"}, {"date": "01/09", "month": "Setembro", "value": 1000, "refund": true, "desc": "Devolução/entrada"}, {"date": "02/09", "month": "Setembro", "value": 150, "refund": false, "desc": "Transferência"}, {"date": "15/09", "month": "Setembro", "value": 50, "refund": false, "desc": "Transferência"}]}}, "food": {"Restaurantes genéricos": {"months": {"Julho": 697.55, "Agosto": 486.93, "Setembro": 834.81}, "total": 2019.29, "transactions": [{"date": "07/07", "month": "Julho", "desc": "RSHOP RESTAURANTE10707", "value": 75.8, "refund": false}, {"date": "07/07", "month": "Julho", "desc": "RSHOP RESTAURANTE10707", "value": 90.7, "refund": false}, {"date": "08/07", "month": "Julho", "desc": "RSHOP RESTAURANTE10807", "value": 20.77, "refund": false}, {"date": "13/07", "month": "Julho", "desc": "RSHOP RESTAURANTE11207", "value": 18.85, "refund": false}, {"date": "20/07", "month": "Julho", "desc": "RSHOP RESTAURANTE11807", "value": 25.05, "refund": false}, {"date": "20/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12007", "value": 113.88, "refund": false}, {"date": "20/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12007", "value": 37.9, "refund": false}, {"date": "22/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12207", "value": 40.4, "refund": false}, {"date": "23/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12307", "value": 76.53, "refund": false}, {"date": "27/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12607", "value": 44.93, "refund": false}, {"date": "27/07", "month": "Julho", "desc": "RSHOP RESTAURANTE12707", "value": 29.56, "refund": false}, {"date": "28/07", "month": "Julho", "desc": "RSHOP FHR RESTAURA2807", "value": 38.9, "refund": false}, {"date": "28/07", "month": "Julho", "desc": "RSHOP FHR RESTAURA2807", "value": 84.28, "refund": false}, {"date": "12/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE31208", "value": 4.0, "refund": false}, {"date": "12/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE31208", "value": 49.74, "refund": false}, {"date": "13/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE31308", "value": 78.75, "refund": false}, {"date": "24/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE32408", "value": 54.02, "refund": false}, {"date": "26/08", "month": "Agosto", "desc": "PAY RESTA 26/08", "value": 49.37, "refund": false}, {"date": "26/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE32608", "value": 42.33, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE32908", "value": 103.38, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "PAY RESTA 30/08", "value": 9.5, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "PAY RESTA 31/08", "value": 77.52, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "RSHOP RESTAURANTE33108", "value": 18.32, "refund": false}, {"date": "01/09", "month": "Setembro", "desc": "PAY RESTA 01/09", "value": 29.4, "refund": false}, {"date": "02/09", "month": "Setembro", "desc": "PAY RESTA 02/09", "value": 74.3, "refund": false}, {"date": "03/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE30309", "value": 77.24, "refund": false}, {"date": "09/09", "month": "Setembro", "desc": "PAY RESTA 09/09", "value": 32.9, "refund": false}, {"date": "09/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE30909", "value": 56.45, "refund": false}, {"date": "14/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE31209", "value": 21.9, "refund": false}, {"date": "14/09", "month": "Setembro", "desc": "PAY RESTA 14/09", "value": 33.9, "refund": false}, {"date": "15/09", "month": "Setembro", "desc": "PAY RESTA 15/09", "value": 50.02, "refund": false}, {"date": "15/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE31509", "value": 21.4, "refund": false}, {"date": "15/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE31509", "value": 41.82, "refund": false}, {"date": "21/09", "month": "Setembro", "desc": "PAY RESTA 19/09", "value": 55.8, "refund": false}, {"date": "21/09", "month": "Setembro", "desc": "PAY RESTA 20/09", "value": 72.08, "refund": false}, {"date": "21/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE32109", "value": 38.69, "refund": false}, {"date": "22/09", "month": "Setembro", "desc": "PAY RESTA 22/09", "value": 56.9, "refund": false}, {"date": "28/09", "month": "Setembro", "desc": "PAY RESTA 26/09", "value": 38.09, "refund": false}, {"date": "28/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE32709", "value": 44.6, "refund": false}, {"date": "28/09", "month": "Setembro", "desc": "RSHOP RESTAURANTE32809", "value": 17.62, "refund": false}, {"date": "30/09", "month": "Setembro", "desc": "PAY RESTA 30/09", "value": 71.7, "refund": false}]}, "Carrefour": {"months": {"Julho": 528.76, "Agosto": 61.13, "Setembro": 874.24}, "total": 1464.13, "transactions": [{"date": "08/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO0807", "value": 85.51, "refund": false}, {"date": "10/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO0907", "value": 124.58, "refund": false}, {"date": "20/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO1807", "value": 50.34, "refund": false}, {"date": "20/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO2007", "value": 51.46, "refund": false}, {"date": "31/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO3107", "value": 32.44, "refund": false}, {"date": "31/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO3107", "value": 108.07, "refund": false}, {"date": "31/07", "month": "Julho", "desc": "RSHOP CARREFOUR RO3107", "value": 76.36, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "RSHOP CARREFOUR RO3108", "value": 61.13, "refund": false}, {"date": "01/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO0109", "value": 39.03, "refund": false}, {"date": "10/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO1009", "value": 280.0, "refund": false}, {"date": "10/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO1009", "value": 0.38, "refund": false}, {"date": "11/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO1109", "value": 54.24, "refund": false}, {"date": "17/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO1709", "value": 56.63, "refund": false}, {"date": "21/09", "month": "Setembro", "desc": "PAY CARRE 21/09", "value": 83.77, "refund": false}, {"date": "24/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO2409", "value": 182.01, "refund": false}, {"date": "28/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO2809", "value": 103.1, "refund": false}, {"date": "30/09", "month": "Setembro", "desc": "RSHOP CARREFOUR RO3009", "value": 75.08, "refund": false}]}, "Vila das Frutas": {"months": {"Julho": 1953.74, "Agosto": 0.0, "Setembro": 144.45}, "total": 2098.19, "transactions": [{"date": "10/07", "month": "Julho", "desc": "RSHOP VILA DAS FRU0907", "value": 853.42, "refund": false}, {"date": "16/07", "month": "Julho", "desc": "RSHOP VILA DAS FRU1607", "value": 133.83, "refund": false}, {"date": "24/07", "month": "Julho", "desc": "RSHOP VILA DAS FRU2407", "value": 395.76, "refund": false}, {"date": "31/07", "month": "Julho", "desc": "RSHOP VILA DAS FRU3107", "value": 570.73, "refund": false}, {"date": "04/09", "month": "Setembro", "desc": "PAY VILA  04/09", "value": 30.1, "refund": false}, {"date": "11/09", "month": "Setembro", "desc": "RSHOP VILA DAS FRU1109", "value": 114.35, "refund": false}]}, "Piazza Italia": {"months": {"Julho": 171.02, "Agosto": 129.29, "Setembro": 270.82}, "total": 571.13, "transactions": [{"date": "10/07", "month": "Julho", "desc": "RSHOP PIAZZA ITALI1007", "value": 97.51, "refund": false}, {"date": "14/07", "month": "Julho", "desc": "RSHOP PIAZZA ITALI1407", "value": 58.51, "refund": false}, {"date": "31/07", "month": "Julho", "desc": "RSHOP PIAZZA ITALI3107", "value": 15.0, "refund": false}, {"date": "26/08", "month": "Agosto", "desc": "RSHOP PIAZZA ITALI2608", "value": 81.27, "refund": false}, {"date": "28/08", "month": "Agosto", "desc": "RSHOP PIAZZA ITALI2808", "value": 48.02, "refund": false}, {"date": "08/09", "month": "Setembro", "desc": "PAY PIAZZ 08/09", "value": 38.3, "refund": false}, {"date": "08/09", "month": "Setembro", "desc": "RSHOP PIAZZA ITALI0809", "value": 104.38, "refund": false}, {"date": "09/09", "month": "Setembro", "desc": "RSHOP PIAZZA ITALI0909", "value": 50.0, "refund": false}, {"date": "10/09", "month": "Setembro", "desc": "RSHOP PIAZZA ITALI1009", "value": 71.24, "refund": false}, {"date": "28/09", "month": "Setembro", "desc": "RSHOP PIAZZA ITALI2809", "value": 6.9, "refund": false}]}, "MP Grill / Grilespe": {"months": {"Julho": 229.9, "Agosto": 0.0, "Setembro": 212.7}, "total": 442.6, "transactions": [{"date": "13/07", "month": "Julho", "desc": "RSHOP MP  GRILESPE1307", "value": 89.1, "refund": false}, {"date": "15/07", "month": "Julho", "desc": "RSHOP MP  GRILESPE1507", "value": 27.5, "refund": false}, {"date": "16/07", "month": "Julho", "desc": "RSHOP MP  GRILESPE1607", "value": 113.3, "refund": false}, {"date": "02/09", "month": "Setembro", "desc": "RSHOP MP  GRILESPE0209", "value": 106.0, "refund": false}, {"date": "03/09", "month": "Setembro", "desc": "RSHOP MP  GRILESPE0309", "value": 106.7, "refund": false}]}, "Seara": {"months": {"Julho": 13.0, "Agosto": 29.9, "Setembro": 67.8}, "total": 110.7, "transactions": [{"date": "20/07", "month": "Julho", "desc": "RSHOP Seara Alimen1807", "value": 13.0, "refund": false}, {"date": "12/08", "month": "Agosto", "desc": "RSHOP Seara Alimen1208", "value": 29.9, "refund": false}, {"date": "11/09", "month": "Setembro", "desc": "RSHOP Seara Alimen1109", "value": 67.8, "refund": false}]}, "MP Bancadej": {"months": {"Julho": 158.05, "Agosto": 147.0, "Setembro": 147.0}, "total": 452.05, "transactions": [{"date": "20/07", "month": "Julho", "desc": "RSHOP MP  BANCADEJ2007", "value": 112.9, "refund": false}, {"date": "29/07", "month": "Julho", "desc": "RSHOP MP  BANCADEJ2907", "value": 45.15, "refund": false}, {"date": "31/08", "month": "Agosto", "desc": "RSHOP MP  BANCADEJ2908", "value": 147.0, "refund": false}, {"date": "30/09", "month": "Setembro", "desc": "RSHOP MP  BANCADEJ3009", "value": 147.0, "refund": false}]}, "Armazém / conveniência": {"months": {"Julho": 4.99, "Agosto": 0.0, "Setembro": 364.43}, "total": 369.42, "transactions": [{"date": "22/07", "month": "Julho", "desc": "RSHOP ArmazemDosGa2207", "value": 4.99, "refund": false}, {"date": "03/09", "month": "Setembro", "desc": "RSHOP Conveniencia0209", "value": 291.49, "refund": false}, {"date": "10/09", "month": "Setembro", "desc": "PAY Armaz 10/09", "value": 72.94, "refund": false}]}, "Chico's Grill": {"months": {"Julho": 0.0, "Agosto": 157.45, "Setembro": 0.0}, "total": 157.45, "transactions": [{"date": "13/08", "month": "Agosto", "desc": "RSHOP CHICOS GRILL1308", "value": 48.0, "refund": false}, {"date": "18/08", "month": "Agosto", "desc": "RSHOP CHICOS GRILL1708", "value": 39.6, "refund": false}, {"date": "19/08", "month": "Agosto", "desc": "RSHOP CHICOS GRILL1908", "value": 69.85, "refund": false}]}, "Lanches / sorvete": {"months": {"Julho": 0.0, "Agosto": 19.24, "Setembro": 0.0}, "total": 19.24, "transactions": [{"date": "19/08", "month": "Agosto", "desc": "RSHOP CkForteSorve1908", "value": 11.24, "refund": false}, {"date": "19/08", "month": "Agosto", "desc": "RSHOP LANCHONETE E1908", "value": 8.0, "refund": false}]}, "Delivery / iFood": {"months": {"Julho": 0.0, "Agosto": 302.58, "Setembro": 145.79}, "total": 448.37, "transactions": [{"date": "19/08", "month": "Agosto", "desc": "PAY IFD A 19/08", "value": 13.89, "refund": false}, {"date": "20/08", "month": "Agosto", "desc": "PAY IFD R 20/08", "value": 75.69, "refund": false}, {"date": "24/08", "month": "Agosto", "desc": "PAY IFD A 24/08", "value": 37.69, "refund": false}, {"date": "24/08", "month": "Agosto", "desc": "PAY IFD C 24/08", "value": 99.88, "refund": false}, {"date": "25/08", "month": "Agosto", "desc": "PAY IFD D 25/08", "value": 75.43, "refund": false}, {"date": "10/09", "month": "Setembro", "desc": "PAY IFD A 10/09", "value": 89.69, "refund": false}, {"date": "14/09", "month": "Setembro", "desc": "PAY IFD C 14/09", "value": 56.1, "refund": false}]}, "Sodexo": {"months": {"Julho": 0.0, "Agosto": 0.0, "Setembro": 20.0}, "total": 20.0, "transactions": [{"date": "01/09", "month": "Setembro", "desc": "RSHOP SODEXO      0109", "value": 20.0, "refund": false}]}, "MP G (provável alimentação)": {"months": {"Julho": 0.0, "Agosto": 0.0, "Setembro": 126.5}, "total": 126.5, "transactions": [{"date": "01/09", "month": "Setembro", "desc": "PAY MP  G 01/09", "value": 37.4, "refund": false}, {"date": "14/09", "month": "Setembro", "desc": "PAY MP  G 13/09", "value": 25.85, "refund": false}, {"date": "23/09", "month": "Setembro", "desc": "PAY MP  G 23/09", "value": 63.25, "refund": false}]}, "Pizzarias": {"months": {"Julho": 0.0, "Agosto": 0.0, "Setembro": 150.0}, "total": 150.0, "transactions": [{"date": "14/09", "month": "Setembro", "desc": "RSHOP PIZZARIA VER1209", "value": 50.0, "refund": false}, {"date": "16/09", "month": "Setembro", "desc": "PAY PIZZA 16/09", "value": 50.0, "refund": false}, {"date": "24/09", "month": "Setembro", "desc": "RSHOP PIZZARIA SAN2409", "value": 50.0, "refund": false}]}}, "other": {"Assinaturas / entretenimento": {"months": {"Julho": 138.1, "Agosto": 90.8, "Setembro": 90.8}, "total": 319.7, "transactions": [{"date": "06/07", "month": "Julho", "desc": "DEB AUTOR GLOBO COM", "value": 30.9}, {"date": "20/07", "month": "Julho", "desc": "RSHOP OMNIVERSE LI1807", "value": 16.9}, {"date": "20/07", "month": "Julho", "desc": "RSHOP OMNIVERSE LI1807", "value": 18.5}, {"date": "20/07", "month": "Julho", "desc": "RSHOP OMNIVERSE LI1907", "value": 11.9}, {"date": "24/07", "month": "Julho", "desc": "DEB AUTOR NETFLIX.COM", "value": 59.9}, {"date": "05/08", "month": "Agosto", "desc": "DEB AUTOR GLOBO COM", "value": 30.9}, {"date": "24/08", "month": "Agosto", "desc": "DEB AUTOR NETFLIX.COM", "value": 59.9}, {"date": "08/09", "month": "Setembro", "desc": "DEB AUTOR GLOBO COM", "value": 30.9}, {"date": "24/09", "month": "Setembro", "desc": "DEB AUTOR NETFLIX.COM", "value": 59.9}]}, "Farmácia / saúde": {"months": {"Julho": 240.02, "Agosto": 163.15, "Setembro": 130.67}, "total": 533.84, "transactions": [{"date": "13/07", "month": "Julho", "desc": "RSHOP DROGASIL16881307", "value": 120.0}, {"date": "31/07", "month": "Julho", "desc": "RSHOP DROGASIL16883107", "value": 120.02}, {"date": "26/08", "month": "Agosto", "desc": "PAY DROGA 26/08", "value": 100.0}, {"date": "28/08", "month": "Agosto", "desc": "PAY DROGA 28/08", "value": 63.15}, {"date": "02/09", "month": "Setembro", "desc": "RSHOP DROGASIL16880209", "value": 105.37}, {"date": "04/09", "month": "Setembro", "desc": "PAY DROGA 04/09", "value": 25.3}]}, "Moradia e IPTU": {"months": {"Julho": 442.9, "Agosto": 2319.39, "Setembro": 2311.8}, "total": 5074.09, "transactions": [{"date": "15/07", "month": "Julho", "desc": "DA  PMSP 570080000000903", "value": 442.9}, {"date": "05/08", "month": "Agosto", "desc": "PAG BOLETO CONDOMINIO EDIFICIO GIOTTO", "value": 1876.49}, {"date": "17/08", "month": "Agosto", "desc": "DA  PMSP 570080000000903", "value": 442.9}, {"date": "04/09", "month": "Setembro", "desc": "PAG BOLETO CONDOMINIO EDIFICIO GIOTTO", "value": 1868.9}, {"date": "15/09", "month": "Setembro", "desc": "DA  PMSP 570080000000903", "value": 442.9}]}, "Contas da casa e telefone": {"months": {"Julho": 128.49, "Agosto": 858.91, "Setembro": 983.41}, "total": 1970.81, "transactions": [{"date": "20/07", "month": "Julho", "desc": "INT PRE-PAGOXXXXX  6668", "value": 25.0}, {"date": "20/07", "month": "Julho", "desc": "INT PRE-PAGOXXXXX  4872", "value": 20.0}, {"date": "21/07", "month": "Julho", "desc": "DA  COMGAS 03006344", "value": 63.49}, {"date": "31/07", "month": "Julho", "desc": "INT PRE-PAGOXXXXX  4872", "value": 20.0}, {"date": "03/08", "month": "Agosto", "desc": "DA  ELETROPAULO 13596132", "value": 225.85}, {"date": "05/08", "month": "Agosto", "desc": "INT /VIVO FIXO NAC 13 89", "value": 93.0}, {"date": "05/08", "month": "Agosto", "desc": "INT /VIVO FIXO NAC 13 89", "value": 368.11}, {"date": "11/08", "month": "Agosto", "desc": "INT PRE-PAGOXXXXX  6668", "value": 20.0}, {"date": "11/08", "month": "Agosto", "desc": "INT PRE-PAGOXXXXX  4872", "value": 20.0}, {"date": "18/08", "month": "Agosto", "desc": "DA  COMGAS 03006344", "value": 81.95}, {"date": "24/08", "month": "Agosto", "desc": "INT PRE-PAGOXXXXX  6668", "value": 25.0}, {"date": "24/08", "month": "Agosto", "desc": "INT PRE-PAGOXXXXX  4872", "value": 25.0}, {"date": "01/09", "month": "Setembro", "desc": "DA  ELETROPAULO 13596132", "value": 240.74}, {"date": "02/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  6668", "value": 30.0}, {"date": "02/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  4872", "value": 25.0}, {"date": "04/09", "month": "Setembro", "desc": "PAGAMENTOCONTA VIVOFIXONAC", "value": 368.11}, {"date": "04/09", "month": "Setembro", "desc": "PAGAMENTOCONTA VIVOFIXONAC", "value": 90.0}, {"date": "04/09", "month": "Setembro", "desc": "PIX QRS TELEFONICA 04/09", "value": 32.25}, {"date": "16/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  6668", "value": 30.0}, {"date": "16/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  4872", "value": 25.0}, {"date": "16/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  4872", "value": 25.0}, {"date": "21/09", "month": "Setembro", "desc": "DA  COMGAS 03006344", "value": 72.31}, {"date": "23/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  6668", "value": 25.0}, {"date": "23/09", "month": "Setembro", "desc": "INT PRE-PAGOXXXXX  4872", "value": 20.0}]}, "Outros / não identificados": {"months": {"Julho": 29.95, "Agosto": 65.97, "Setembro": 218.76}, "total": 314.68, "transactions": [{"date": "31/07", "month": "Julho", "desc": "RSHOP SebastiaoVal3107", "value": 14.95}, {"date": "31/07", "month": "Julho", "desc": "RSHOP Antoniovieir3107", "value": 15.0}, {"date": "03/08", "month": "Agosto", "desc": "RSHOP CarlosRobert0108", "value": 13.55}, {"date": "04/08", "month": "Agosto", "desc": "IOF", "value": 13.12}, {"date": "20/08", "month": "Agosto", "desc": "PAY WASHI 20/08", "value": 39.3}, {"date": "02/09", "month": "Setembro", "desc": "IOF", "value": 5.1}, {"date": "15/09", "month": "Setembro", "desc": "RSHOP AMARO S BICH1509", "value": 186.66}, {"date": "28/09", "month": "Setembro", "desc": "PAY MP  L 28/09", "value": 27.0}]}, "Flores / presentes": {"months": {"Julho": 0.0, "Agosto": 305.0, "Setembro": 0.0}, "total": 305.0, "transactions": [{"date": "11/08", "month": "Agosto", "desc": "PIX TRANSF FLORICU11/08", "value": 305.0}]}, "Transporte": {"months": {"Julho": 0.0, "Agosto": 310.3, "Setembro": 175.86}, "total": 486.16, "transactions": [{"date": "17/08", "month": "Agosto", "desc": "RSHOP AUTO POSTO B1708", "value": 140.0}, {"date": "19/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG19/08", "value": 12.3}, {"date": "19/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG19/08", "value": 11.0}, {"date": "19/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG19/08", "value": 12.8}, {"date": "24/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG23/08", "value": 33.6}, {"date": "27/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG27/08", "value": 16.2}, {"date": "27/08", "month": "Agosto", "desc": "PIX QRS 99 TECNOLOG27/08", "value": 14.7}, {"date": "02/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG02/09", "value": 12.0}, {"date": "03/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG03/09", "value": 9.2}, {"date": "03/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG03/09", "value": 14.0}, {"date": "03/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG03/09", "value": 13.4}, {"date": "03/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG03/09", "value": 15.3}, {"date": "08/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG07/09", "value": 17.6}, {"date": "14/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG12/09", "value": 17.3}, {"date": "23/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG23/09", "value": 5.0}, {"date": "23/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG23/09", "value": 17.8}, {"date": "23/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG23/09", "value": 19.3}, {"date": "28/09", "month": "Setembro", "desc": "PIX QRS 99 TECNOLOG26/09", "value": 6.54}, {"date": "28/08", "month": "Agosto", "desc": "99 Tecnologia — poupança", "value": 31.9}, {"date": "28/08", "month": "Agosto", "desc": "99 Tecnologia — poupança", "value": 37.8}, {"date": "01/09", "month": "Setembro", "desc": "99 Tecnologia — poupança", "value": 11.52}, {"date": "02/09", "month": "Setembro", "desc": "99 Tecnologia — poupança", "value": 16.9}]}}, "transfer_month": {"Julho": 5670, "Agosto": 4220, "Setembro": 5132}, "food_month": {"Julho": 3757.01, "Agosto": 1333.52, "Setembro": 3358.54}, "other_month": {"Julho": 979.46, "Agosto": 4113.52, "Setembro": 3911.3}, "monthly_total": {"Julho": 16551.79, "Agosto": 15781.3, "Setembro": 16806.44}, "grand": {"card": 16664.18, "people": 15022, "food": 8449.07, "other": 9004.28, "total": 49139.53}};
+const months=['Julho','Agosto','Setembro'];
+const money=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+document.querySelector('#kTotal').textContent=money(D.grand.total);
+document.querySelector('#kCard').textContent=money(D.grand.card);
+document.querySelector('#kPeople').textContent=money(D.grand.people);
+document.querySelector('#kFood').textContent=money(D.grand.food);
+document.querySelector('#kOther').textContent=money(D.grand.other);
+
+document.querySelector('#monthSummary').innerHTML=months.map(m=>`
+  <div class="month-box">
+    <div class="row"><b>${m}</b><strong>${money(D.monthly_total[m])}</strong></div>
+    <table>
+      <tr><td>Cartão + seguros</td><td class="num">${money(D.card_month[m])}</td></tr>
+      <tr><td>Transferências</td><td class="num">${money(D.transfer_month[m])}</td></tr>
+      <tr><td>Alimentação</td><td class="num">${money(D.food_month[m])}</td></tr>
+      <tr><td>Outros</td><td class="num">${money(D.other_month[m])}</td></tr>
+    </table>
+  </div>`).join('');
+
+function bars(series, kind=''){
+  const max=Math.max(...series,1);
+  return months.map((m,i)=>`
+    <div class="bar-group">
+      <span class="bar-val">${money(series[i])}</span>
+      <div class="bar ${kind}" style="height:${Math.max(series[i]/max*100,2)}%"></div>
+      <span class="bar-label">${m}</span>
+    </div>`).join('');
+}
+
+/* CARTÃO */
+let activeCardMonth='Julho';
+function renderCard(){
+  document.querySelector('#cardTabs').innerHTML=months.map(m=>`<button class="tab ${m===activeCardMonth?'active':''}" data-m="${m}">${m}</button>`).join('');
+  document.querySelectorAll('#cardTabs .tab').forEach(b=>b.onclick=()=>{activeCardMonth=b.dataset.m;renderCard()});
+  const payments=D.card_payments[activeCardMonth];
+  const fatura=payments.reduce((s,x)=>s+Number(x[1]),0);
+  document.querySelector('#cardContent').innerHTML=`
+    <div class="category-grid">
+      <a class="category active" href="#cardDetail"><div class="row"><b>Faturas pagas</b><strong>${money(fatura)}</strong></div><small>${payments.length} pagamentos no mês</small><div class="track"><div class="fill" style="width:${Math.min(fatura/D.card_month[activeCardMonth]*100,100)}%"></div></div></a>
+      <a class="category" href="#cardDetail"><div class="row"><b>Seguros do cartão</b><strong>${money(D.card_insurance[activeCardMonth])}</strong></div><small>Seguro cartão + transação protegida</small><div class="track"><div class="fill" style="width:${Math.min(D.card_insurance[activeCardMonth]/D.card_month[activeCardMonth]*100*10,100)}%"></div></div></a>
+      <a class="category" href="#cardDetail"><div class="row"><b>Total cartão</b><strong>${money(D.card_month[activeCardMonth])}</strong></div><small>Fatura + seguros</small><div class="track"><div class="fill" style="width:100%"></div></div></a>
+    </div>`;
+  const series=months.map(m=>D.card_month[m]);
+  document.querySelector('#cardDetail').innerHTML=`
+    <div class="detail-head"><div><h3>Cartão + seguros</h3><p class="hint">Comparação dos três meses</p></div><div class="detail-total">${money(D.card_month[activeCardMonth])}</div></div>
+    <div class="bars">${bars(series,'card')}</div>
+    <table><thead><tr><th>Data</th><th>Descrição</th><th class="num">Valor</th></tr></thead><tbody>
+      ${payments.map(x=>`<tr><td>${x[0]}</td><td>Fatura paga Itaú Gold</td><td class="num">${money(x[1])}</td></tr>`).join('')}
+      <tr><td>—</td><td>Seguros do cartão</td><td class="num">${money(D.card_insurance[activeCardMonth])}</td></tr>
+      <tr class="total-row"><td colspan="2">Total do mês</td><td class="num">${money(D.card_month[activeCardMonth])}</td></tr>
+    </tbody></table>`;
+}
+
+/* GENÉRICO */
+function setupSection(cfg){
+  let activeMonth='Julho';
+  let activeName=null;
+
+  function renderTabs(){
+    document.querySelector(cfg.tabs).innerHTML=months.map(m=>`<button class="tab ${m===activeMonth?'active':''}" data-m="${m}">${m}</button>`).join('');
+    document.querySelectorAll(cfg.tabs+' .tab').forEach(b=>b.onclick=()=>{activeMonth=b.dataset.m;render()});
+  }
+
+  function currentNames(){
+    return Object.keys(cfg.data).filter(n=>(cfg.data[n].months[activeMonth]||0)>0).sort((a,b)=>(cfg.data[b].months[activeMonth]||0)-(cfg.data[a].months[activeMonth]||0));
+  }
+
+  function renderContent(){
+    const names=currentNames();
+    if(!activeName || !cfg.data[activeName] || !(cfg.data[activeName].months[activeMonth]||0)) activeName=names[0];
+    const monthTotal=names.reduce((s,n)=>s+(cfg.data[n].months[activeMonth]||0),0);
+    document.querySelector(cfg.content).innerHTML=`<div class="category-grid">${names.map(n=>{
+      const x=cfg.data[n], val=x.months[activeMonth]||0;
+      return `<a class="category ${n===activeName?'active':''}" href="${cfg.detail}" data-name="${esc(n)}">
+        <div class="row"><b>${esc(n)}</b><strong>${money(val)}</strong></div>
+        <small>Total 90 dias: ${money(x.total)}</small>
+        <div class="track"><div class="fill" style="width:${monthTotal?Math.min(val/monthTotal*100,100).toFixed(1):0}%"></div></div>
+      </a>`}).join('')}</div>`;
+    document.querySelectorAll(cfg.content+' .category').forEach(a=>a.onclick=()=>{activeName=a.dataset.name;renderContent();renderDetail()});
+  }
+
+  function renderDetail(){
+    if(!activeName){document.querySelector(cfg.detail).innerHTML='';return;}
+    const x=cfg.data[activeName];
+    const series=months.map(m=>x.months[m]||0);
+    const tx=(x.transactions||[]).filter(t=>t.month===activeMonth);
+    document.querySelector(cfg.detail).innerHTML=`
+      <div class="detail-head">
+        <div><h3>${esc(activeName)}</h3><p class="hint">Detalhamento de ${activeMonth}</p></div>
+        <div class="detail-total">${money(x.months[activeMonth]||0)}</div>
+      </div>
+      <div class="bars">${bars(series,cfg.kind)}</div>
+      <table><thead><tr><th>Data</th><th>Descrição</th><th class="num">Valor</th></tr></thead><tbody>
+        ${tx.length?tx.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.desc||cfg.defaultDesc)}${t.refund?' (devolução/estorno)':''}</td><td class="num">${t.refund?'− ':''}${money(t.value)}</td></tr>`).join(''):`<tr><td colspan="3">Sem lançamentos nesse mês.</td></tr>`}
+        <tr class="total-row"><td colspan="2">Total no mês</td><td class="num">${money(x.months[activeMonth]||0)}</td></tr>
+      </tbody></table>`;
+  }
+
+  function render(){renderTabs();renderContent();renderDetail()}
+  render();
+}
+
+renderCard();
+
+setupSection({
+  tabs:'#peopleMonthTabs',content:'#peopleContent',detail:'#peopleDetail',
+  data:D.people,kind:'',defaultDesc:'Transferência'
+});
+setupSection({
+  tabs:'#foodMonthTabs',content:'#foodContent',detail:'#foodDetail',
+  data:D.food,kind:'food',defaultDesc:'Compra'
+});
+setupSection({
+  tabs:'#otherMonthTabs',content:'#otherContent',detail:'#otherDetail',
+  data:D.other,kind:'other',defaultDesc:'Lançamento'
+});
+</script>
+</body>
+</html>
