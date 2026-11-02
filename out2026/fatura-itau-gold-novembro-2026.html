@@ -1,0 +1,279 @@
+<title>Fatura Itaú Gold Novembro</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: livro-caixa — resumo no topo, categorias como linhas de razão que abrem os lançamentos */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --fg:#17211f; --muted:#5b6a66; --line:#dbe3e0;
+  --accent:#0d6b58; --accent-soft:#e1f0eb; --neg:#b4372b; --pos:#1f7a43; --warn:#9a6400; --warn-soft:#fbf0d9;
+  --bar:#0d6b58; --bar-bg:#e6ecea;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Public Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1514; --surface:#161e1c; --fg:#e4ece9; --muted:#93a39e; --line:#2a3633;
+  --accent:#4cc3a5; --accent-soft:#16312b; --neg:#f08a7e; --pos:#6fd39a; --warn:#f0bf5c; --warn-soft:#33290f;
+  --bar:#4cc3a5; --bar-bg:#24302d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1514; --surface:#161e1c; --fg:#e4ece9; --muted:#93a39e; --line:#2a3633;
+  --accent:#4cc3a5; --accent-soft:#16312b; --neg:#f08a7e; --pos:#6fd39a; --warn:#f0bf5c; --warn-soft:#33290f;
+  --bar:#4cc3a5; --bar-bg:#24302d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1}
+h2{font-size:20px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header{display:grid;gap:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--fg);font:inherit;font-size:14px;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{font:inherit;font-size:14px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);min-width:0;flex:1 1 220px;max-width:340px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px}
+.kpi .v{font-size:22px;font-weight:500}
+.kpi .v.txt{font-family:var(--f-display);font-size:19px;line-height:1.25}
+.kpi .s{font-size:12.5px;color:var(--muted)}
+.neg{color:var(--neg)} .pos{color:var(--pos)}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}
+.ins{border-left:3px solid var(--accent);padding:4px 0 4px 12px;display:grid;gap:2px}
+.ins.w{border-color:var(--warn)}
+.ins b{font-size:14px} .ins span{font-size:13.5px;color:var(--muted)}
+section{display:grid;gap:12px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.sec-head p{margin:0;color:var(--muted);font-size:13.5px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 14px 6px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:560px;height:auto}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.chart .day{cursor:pointer}
+.chart .day rect.b{fill:var(--bar)}
+.chart .day:hover rect.b,.chart .day.sel rect.b{fill:var(--warn)}
+.chart .grid{stroke:var(--line)}
+.cats{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cat{border-top:1px solid var(--line)}
+.cat:first-child{border-top:0}
+.cat>button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 16px}
+.cat>button:hover{background:var(--accent-soft)}
+.cat>button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.chev{transition:transform .15s;color:var(--muted);font-size:12px}
+.cat.open .chev{transform:rotate(90deg)}
+.cname{font-weight:600;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;min-width:0}
+.cname small{font-weight:400;color:var(--muted);font-size:12.5px}
+.ctot{text-align:right;font-size:15px}
+.ctot small{display:block;color:var(--muted);font-size:11.5px}
+.cbar{grid-column:2/4;height:6px;background:var(--bar-bg);border-radius:3px;overflow:hidden}
+.cbar i{display:block;height:100%;background:var(--bar);border-radius:3px}
+.items{padding:0 16px 14px 46px;display:grid;gap:0}
+.it{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:2px 12px;padding:9px 0;border-top:1px dashed var(--line);align-items:start}
+.it .d{font-size:12.5px;color:var(--muted);padding-top:2px}
+.it .t{min-width:0}
+.it .t b{font-weight:500;display:block}
+.it .t code{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);word-break:break-word}
+.it .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;align-items:center}
+.chip{font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.w{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.chip.m{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.it select{font:inherit;font-size:12px;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);max-width:100%}
+.it .val{text-align:right;font-size:14px;padding-top:1px}
+@media (max-width:560px){.items{padding-left:16px}.it{grid-template-columns:44px minmax(0,1fr) auto}}
+.empty{padding:18px 16px;color:var(--muted)}
+.foot{font-size:13px;color:var(--muted);display:grid;gap:6px}
+.foot ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.linkbtn{all:unset;cursor:pointer;color:var(--accent);font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.filterline{font-size:13.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Fatura fechada de novembro/2026 · Itaú Gold Visa final 2288 · vence 06/11</div>
+    <h1>O que foi comprado no cartão</h1>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Cartão">
+        <button id="acc-all" data-acc="all" aria-pressed="true">Todas</button>
+        <button id="acc-cc" data-acc="Cartão físico" aria-pressed="false">Cartão físico</button>
+        <button id="acc-pp" data-acc="Cartão virtual" aria-pressed="false">Cartão virtual</button>
+      </div>
+      <input type="search" id="q" placeholder="Buscar compra (ex.: google, vila, seara)" aria-label="Buscar lançamento">
+    </div>
+    <div class="filterline" id="filterline" hidden></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+  <div class="insights" id="insights"></div>
+
+  <section>
+    <div class="sec-head"><h2>Compras por dia</h2><p>Clique num dia para ver só os lançamentos dele.</p></div>
+    <div class="chart" id="chart"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Gastos por categoria</h2><p>Clique na categoria para ver cada gasto. Você pode mudar a categoria de qualquer item. <button class="linkbtn" id="reset">Desfazer minhas mudanças</button></p></div>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Pagamentos da fatura anterior</h2><p>Não entram na soma das compras.</p></div>
+    <div class="cats" id="others"></div>
+  </section>
+
+  <div class="foot">
+    <b>Observações</b>
+    <ul>
+      <li>Só entra o que está nesta fatura fechada, de 24/09 a 27/10/2026, pela data da compra. Nada de faturas anteriores foi somado.</li>
+      <li>Os 5 “Pagamento Com Saldo” (R$ 3.924,86) quitaram a fatura anterior com dinheiro da conta. São os mesmos “fatura paga itau gold” do extrato da poupança e não contam como compra.</li>
+      <li>O valor da fatura (R$ 1.532,13) é o que o banco cobra, depois de considerar os pagamentos e o saldo de faturas anteriores. Esse cálculo não vem detalhado no arquivo. O painel mostra só as compras desta fatura.</li>
+      <li>“Cartão virtual” é o final 5202, usado nas assinaturas e no Mercado Livre. “Cartão físico” é o final 2288.</li>
+      <li>Compras com “Google” no nome são feitas pela Google Play. June's Journey e 5 Differences são jogos de celular, e as compras são itens dentro do jogo.</li>
+      <li>Itens com a etiqueta “a confirmar” têm descrição genérica. Ajuste a categoria se souber o que é.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const DATA = [{"id": 0, "date": "2026-09-24", "desc": "Cancelamento De Compra - Mercadolivre*mercadolivreosascobr", "v": 22.78, "acc": "Cartão virtual", "cat": "Compras online", "note": "Cancelamento de compra no Mercado Livre (crédito)", "flag": null}, {"id": 1, "date": "2026-09-28", "desc": "Google June S Journeysao Paulobr", "v": -41.49, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 2, "date": "2026-09-28", "desc": "Google June S Journeysao Paulobr", "v": -177.89, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 3, "date": "2026-09-28", "desc": "Restaurante3sao Paulobr", "v": -9.09, "acc": "Cartão físico", "cat": "Alimentação fora", "note": "Restaurante", "flag": null}, {"id": 4, "date": "2026-09-28", "desc": "Google G1sk002msao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Assinaturas", "note": "Google One (armazenamento), provável", "flag": "confirmar"}, {"id": 5, "date": "2026-09-29", "desc": "Itaú Avisa", "v": -7.99, "acc": "Cartão físico", "cat": "Tarifas e seguros", "note": "Itaú Avisa (alertas por SMS)", "flag": null}, {"id": 6, "date": "2026-10-01", "desc": "Google June S Journeysao Paulobr", "v": -59.29, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 7, "date": "2026-10-01", "desc": "Google June S Journeysao Paulobr", "v": -118.59, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 8, "date": "2026-10-02", "desc": "Pagamento Com Saldo", "v": 1082.63, "acc": "Cartão físico", "cat": "Pagamentos da fatura anterior", "note": "Pagamento feito com saldo da conta (quita a fatura anterior)", "flag": null}, {"id": 9, "date": "2026-10-02", "desc": "Vila Das Frutas Moemasao Paulobr", "v": -714.69, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Vila das Frutas Moema (hortifrúti)", "flag": null}, {"id": 10, "date": "2026-10-02", "desc": "Drogasil1688sao Paulobr", "v": -17.82, "acc": "Cartão físico", "cat": "Farmácia", "note": "Drogasil", "flag": null}, {"id": 11, "date": "2026-10-02", "desc": "Seara Alimentossao Paulobr", "v": -39.8, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Seara Alimentos (carnes e congelados)", "flag": null}, {"id": 12, "date": "2026-10-03", "desc": "Google June S Journeysao Paulobr", "v": -118.59, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 13, "date": "2026-10-05", "desc": "Amazonprimebrsao Paulobr", "v": -19.9, "acc": "Cartão virtual", "cat": "Assinaturas", "note": "Amazon Prime", "flag": null}, {"id": 14, "date": "2026-10-05", "desc": "Paramount+sao Paulobr", "v": -34.9, "acc": "Cartão virtual", "cat": "Assinaturas", "note": "Paramount+", "flag": null}, {"id": 15, "date": "2026-10-07", "desc": "Mp*melimaisosascobr", "v": -59.9, "acc": "Cartão virtual", "cat": "Assinaturas", "note": "Meli+, assinatura do Mercado Livre", "flag": null}, {"id": 16, "date": "2026-10-07", "desc": "Google June S Journeysao Paulobr", "v": -41.49, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 17, "date": "2026-10-07", "desc": "Google June S Journeysao Paulobr", "v": -177.89, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 18, "date": "2026-10-07", "desc": "Mercadolivre*mercadolivreosascobr", "v": -61.59, "acc": "Cartão virtual", "cat": "Compras online", "note": "Compra no Mercado Livre", "flag": null}, {"id": 19, "date": "2026-10-07", "desc": "Google June S Journeysao Paulobr", "v": -11.79, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 20, "date": "2026-10-07", "desc": "Google June S Journeysao Paulobr", "v": -29.59, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 21, "date": "2026-10-08", "desc": "Google June S Journeysao Paulobr", "v": -118.59, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 22, "date": "2026-10-09", "desc": "Pagamento Com Saldo", "v": 521.11, "acc": "Cartão físico", "cat": "Pagamentos da fatura anterior", "note": "Pagamento feito com saldo da conta (quita a fatura anterior)", "flag": null}, {"id": 23, "date": "2026-10-09", "desc": "Google June S Journeysao Paulobr", "v": -177.89, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 24, "date": "2026-10-09", "desc": "Vila Das Frutas Moemasao Paulobr", "v": -607.05, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Vila das Frutas Moema (hortifrúti)", "flag": null}, {"id": 25, "date": "2026-10-10", "desc": "Google June S Journeysao Paulobr", "v": -41.49, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 26, "date": "2026-10-10", "desc": "Google June S Journeysao Paulobr", "v": -177.89, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 27, "date": "2026-10-11", "desc": "Pagamento Com Saldo", "v": 1200.0, "acc": "Cartão físico", "cat": "Pagamentos da fatura anterior", "note": "Pagamento feito com saldo da conta (quita a fatura anterior)", "flag": null}, {"id": 28, "date": "2026-10-11", "desc": "Google 5 Differencessao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "5 Differences, jogo de achar diferenças (compra no app via Google Play)", "flag": null}, {"id": 29, "date": "2026-10-11", "desc": "Google 5 Differencessao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "5 Differences, jogo de achar diferenças (compra no app via Google Play)", "flag": null}, {"id": 30, "date": "2026-10-13", "desc": "Google June S Journeysao Paulobr", "v": -11.79, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 31, "date": "2026-10-14", "desc": "Anthropic* Claude Subanthropic.comus", "v": -117.37, "acc": "Cartão virtual", "cat": "Assinaturas", "note": "Claude (Anthropic), assinatura mensal em dólar", "flag": null}, {"id": 32, "date": "2026-10-14", "desc": "Iof Internacional - Anthropic* Claude Subanthropic.comus", "v": -4.11, "acc": "Cartão virtual", "cat": "Assinaturas", "note": "IOF internacional da assinatura do Claude", "flag": null}, {"id": 33, "date": "2026-10-14", "desc": "Google June S Journeysao Paulobr", "v": -59.29, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 34, "date": "2026-10-15", "desc": "Pagamento Com Saldo", "v": 376.12, "acc": "Cartão físico", "cat": "Pagamentos da fatura anterior", "note": "Pagamento feito com saldo da conta (quita a fatura anterior)", "flag": null}, {"id": 35, "date": "2026-10-15", "desc": "Google June S Journeysao Paulobr", "v": -118.59, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "June's Journey, jogo de objetos escondidos (compra no app via Google Play)", "flag": null}, {"id": 36, "date": "2026-10-15", "desc": "Cartao Protegido", "v": -9.5, "acc": "Cartão físico", "cat": "Tarifas e seguros", "note": "Seguro Cartão Protegido", "flag": null}, {"id": 37, "date": "2026-10-16", "desc": "Google 5 Differencessao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "5 Differences, jogo de achar diferenças (compra no app via Google Play)", "flag": null}, {"id": 38, "date": "2026-10-16", "desc": "Google 5 Differencessao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "5 Differences, jogo de achar diferenças (compra no app via Google Play)", "flag": null}, {"id": 39, "date": "2026-10-16", "desc": "Google 5 Differencessao Paulobr", "v": -9.99, "acc": "Cartão físico", "cat": "Jogos no celular", "note": "5 Differences, jogo de achar diferenças (compra no app via Google Play)", "flag": null}, {"id": 40, "date": "2026-10-16", "desc": "Vila Das Frutas Moemasao Paulobr", "v": -224.31, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Vila das Frutas Moema (hortifrúti)", "flag": null}, {"id": 41, "date": "2026-10-16", "desc": "Seara Alimentossao Paulobr", "v": -157.5, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Seara Alimentos (carnes e congelados)", "flag": null}, {"id": 42, "date": "2026-10-16", "desc": "Google Youtubesao Paulobr", "v": -15.0, "acc": "Cartão físico", "cat": "Assinaturas", "note": "YouTube (Premium ou assinatura de canal)", "flag": "confirmar"}, {"id": 43, "date": "2026-10-21", "desc": "Pagamento Com Saldo", "v": 745.0, "acc": "Cartão físico", "cat": "Pagamentos da fatura anterior", "note": "Pagamento feito com saldo da conta (quita a fatura anterior)", "flag": null}, {"id": 44, "date": "2026-10-22", "desc": "Vila Das Frutas Moemasao Paulobr", "v": -344.87, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Vila das Frutas Moema (hortifrúti)", "flag": null}, {"id": 45, "date": "2026-10-22", "desc": "Seara Alimentossao Paulobr", "v": -53.8, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Seara Alimentos (carnes e congelados)", "flag": null}, {"id": 46, "date": "2026-10-25", "desc": "Mercadolivre*mercadolivreosascobr", "v": -22.21, "acc": "Cartão virtual", "cat": "Compras online", "note": "Compra no Mercado Livre", "flag": null}, {"id": 47, "date": "2026-10-25", "desc": "Mercadolivre*mercadolivreosascobr", "v": -121.9, "acc": "Cartão virtual", "cat": "Compras online", "note": "Compra no Mercado Livre", "flag": null}, {"id": 48, "date": "2026-10-27", "desc": "Seara Alimentossao Paulobr", "v": -9.97, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Seara Alimentos (carnes e congelados)", "flag": null}, {"id": 49, "date": "2026-10-27", "desc": "Seara Alimentossao Paulobr", "v": -104.8, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Seara Alimentos (carnes e congelados)", "flag": null}, {"id": 50, "date": "2026-10-27", "desc": "Carrefour Rouxinolsao Paulobr", "v": -74.21, "acc": "Cartão físico", "cat": "Hortifrúti e mercado", "note": "Carrefour Rouxinol (Moema)", "flag": null}];
+const SPECIAL = ['Pagamentos da fatura anterior'];
+const DAYS=[]; for(let t=Date.UTC(2026,8,24);t<=Date.UTC(2026,9,27);t+=864e5) DAYS.push(new Date(t).toISOString().slice(0,10));
+const ALLCATS = [...new Set(DATA.map(d=>d.cat))].filter(c=>!SPECIAL.includes(c)).sort((a,b)=>a.localeCompare(b,'pt-BR')).concat(SPECIAL);
+const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const ddmm = s => s.slice(8,10)+'/'+s.slice(5,7);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let overrides = {};
+try{ overrides = JSON.parse(localStorage.getItem('fatura-nov26-cat')||'{}')||{} }catch(e){ overrides = {} }
+const state = {acc:'all', q:'', day:null, open:new Set()};
+const catOf = d => overrides[d.id] || d.cat;
+function save(){ try{ localStorage.setItem('fatura-nov26-cat',JSON.stringify(overrides)) }catch(e){} }
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+
+function filtered(){
+  const q = norm(state.q.trim());
+  return DATA.filter(d => (state.acc==='all'||d.acc===state.acc)
+    && (!state.day || d.date===state.day)
+    && (!q || norm(d.desc+' '+d.note+' '+catOf(d)).includes(q)));
+}
+
+function render(){
+  const rows = filtered();
+  const spend = rows.filter(d=>!SPECIAL.includes(catOf(d)));
+  const income = rows.filter(d=>catOf(d)==='Receitas');
+  const totOut = -spend.reduce((s,d)=>s+d.v,0);
+  const totIn = income.reduce((s,d)=>s+d.v,0);
+  const res = totIn - totOut;
+
+  const fl = document.getElementById('filterline');
+  const parts=[];
+  if(state.day) parts.push('dia '+ddmm(state.day));
+  if(state.q.trim()) parts.push('busca “'+esc(state.q.trim())+'”');
+  if(state.acc!=='all') parts.push(state.acc.toLowerCase());
+  fl.hidden = !parts.length;
+  fl.innerHTML = parts.length ? 'Mostrando: '+parts.join(' · ')+' &nbsp;<button class="linkbtn" id="clear">limpar filtros</button>' : '';
+  const cl=document.getElementById('clear'); if(cl) cl.onclick=()=>{state.day=null;state.q='';document.getElementById('q').value='';setAcc('all');};
+
+  const cnt = spend.filter(d=>d.v<0).length;
+  const big = Object.entries(spend.reduce((m,d)=>{m[catOf(d)]=(m[catOf(d)]||0)-d.v;return m},{})).sort((x,y)=>y[1]-x[1])[0];
+  document.getElementById('kpis').innerHTML = [
+    ['Total de compras', brl(totOut), 'neg', 'já descontado o cancelamento'],
+    ['Compras', String(cnt), '', 'de 24/09 a 27/10'],
+    ['Maior categoria', big?esc(big[0]):'—', 'txt', big?brl(big[1]):''],
+    ['Valor da fatura', brl(1532.13), '', 'vence em 06/11/2026']
+  ].map(([l,v,c,s])=>`<div class="kpi"><span class="eyebrow">${l}</span><span class="v num ${c}">${v}</span><span class="s">${s}</span></div>`).join('');
+
+  // insights over full month (respecting account filter only)
+  const base = DATA.filter(d=>state.acc==='all'||d.acc===state.acc);
+  const bs = c => -base.filter(d=>catOf(d)===c).reduce((s,d)=>s+d.v,0);
+  const allOut = -base.filter(d=>!SPECIAL.includes(catOf(d))).reduce((s,d)=>s+d.v,0)||1;
+  const jogos = base.filter(d=>catOf(d)==='Jogos no celular');
+  const jj = base.filter(d=>/JUNE S/i.test(d.desc));
+  const ass = base.filter(d=>catOf(d)==='Assinaturas');
+  const conf = base.filter(d=>d.flag&&!overrides[d.id]).length;
+  const ins = [];
+  if(jogos.length) ins.push(['w', 'Jogos: '+brl(bs('Jogos no celular')), jogos.length+' compras dentro de jogos pela Google Play, '+Math.round(bs('Jogos no celular')/allOut*100)+'% do total.']);
+  if(jj.length) ins.push(['w', "June's Journey: "+jj.length+' compras', brl(-jj.reduce((s,d)=>s+d.v,0))+'. Vários valores se repetem (R$ 118,59 e R$ 177,89).']);
+  if(ass.length) ins.push(['', 'Assinaturas: '+brl(bs('Assinaturas')), 'Claude, Meli+, Paramount+, Amazon Prime, YouTube e Google One.']);
+  if(bs('Hortifrúti e mercado')) ins.push(['', 'Mercado: '+brl(bs('Hortifrúti e mercado')), 'Quase tudo no Vila das Frutas e na Seara.']);
+  if(conf) ins.push(['w', conf+(conf===1?' item a confirmar':' itens a confirmar'), 'Procure a etiqueta “a confirmar”.']);
+  document.getElementById('insights').innerHTML = ins.map(([c,b,s])=>`<div class="ins ${c}"><b>${b}</b><span>${s}</span></div>`).join('');
+
+  renderChart();
+
+  // categories
+  const groups = {};
+  spend.forEach(d=>{(groups[catOf(d)] ||= []).push(d)});
+  const list = Object.entries(groups).map(([c,items])=>({c,items,t:-items.reduce((s,d)=>s+d.v,0)})).sort((a,b)=>b.t-a.t);
+  const max = Math.max(...list.map(x=>x.t),1);
+  document.getElementById('cats').innerHTML = list.length ? list.map(g=>catBlock(g, max, totOut)).join('') : '<div class="empty">Nenhum gasto com esses filtros.</div>';
+
+  const og = {};
+  rows.filter(d=>SPECIAL.includes(catOf(d))).forEach(d=>{(og[catOf(d)] ||= []).push(d)});
+  const ol = SPECIAL.filter(c=>og[c]).map(c=>({c,items:og[c],t:og[c].reduce((s,d)=>s+d.v,0),special:true}));
+  document.getElementById('others').innerHTML = ol.length ? ol.map(g=>catBlock(g,0,0)).join('') : '<div class="empty">Nada com esses filtros.</div>';
+  bind();
+}
+
+function catBlock(g,max,tot){
+  const open = state.open.has(g.c) || (state.q.trim() && g.items.length) || state.day;
+  const pct = tot? (g.t/tot*100).toFixed(1).replace('.',',')+'% das compras' : 'pagos com saldo da conta';
+  const totStr = brl(Math.abs(g.t));
+  const items = [...g.items].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
+  return `<div class="cat ${open?'open':''}" data-cat="${esc(g.c)}">
+    <button aria-expanded="${open?'true':'false'}"><span class="chev">▶</span>
+      <span class="cname">${esc(g.c)} <small>${g.items.length} ${g.items.length===1?'lançamento':'lançamentos'}</small></span>
+      <span class="ctot num ${g.special?'pos':''}">${totStr}<small>${pct}</small></span>
+      ${max?`<span class="cbar"><i style="width:${(g.t/max*100).toFixed(1)}%"></i></span>`:''}
+    </button>
+    ${open?`<div class="items">${items.map(itemRow).join('')}</div>`:''}
+  </div>`;
+}
+function itemRow(d){
+  const moved = overrides[d.id] && overrides[d.id]!==d.cat;
+  return `<div class="it">
+    <span class="d num">${ddmm(d.date)}</span>
+    <div class="t"><b>${esc(d.note)}</b><code>${esc(d.desc)}</code>
+      <div class="meta"><span class="chip">${d.acc}</span>${d.flag&&!overrides[d.id]?'<span class="chip w">a confirmar</span>':''}${moved?'<span class="chip m">você mudou</span>':''}
+      <select id="sel-${d.id}" data-id="${d.id}" aria-label="Categoria">${ALLCATS.map(c=>`<option ${c===catOf(d)?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
+    </div>
+    <span class="val num ${d.v>0?'pos':''}">${d.v>0?'+':''}${brl(d.v)}</span>
+  </div>`;
+}
+function bind(){
+  document.querySelectorAll('.cat>button').forEach(b=>b.onclick=()=>{
+    const c=b.parentElement.dataset.cat; state.open.has(c)?state.open.delete(c):state.open.add(c); render();
+  });
+  document.querySelectorAll('.it select').forEach(s=>s.onchange=()=>{
+    const id=+s.dataset.id, d=DATA.find(x=>x.id===id);
+    if(s.value===d.cat) delete overrides[id]; else overrides[id]=s.value;
+    state.open.add(s.value); save(); render();
+  });
+}
+function renderChart(){
+  const base = DATA.filter(d=>(state.acc==='all'||d.acc===state.acc)&&!SPECIAL.includes(catOf(d)));
+  const q = norm(state.q.trim());
+  const days=[]; for(const k of DAYS){days.push([k,-base.filter(d=>d.date===k&&(!q||norm(d.desc+' '+d.note+' '+catOf(d)).includes(q))).reduce((s,d)=>s+d.v,0)])}
+  const W=760,H=200,L=44,B=22,T=10,R=6, mx=Math.max(...days.map(d=>d[1]),1);
+  const step = mx>2000?1000:mx>800?500:mx>300?100:50, top=Math.ceil(mx/step)*step;
+  const y=v=>T+(H-T-B)*(1-v/top), bw=(W-L-R)/DAYS.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Compras por dia">`;
+  for(let v=0;v<=top;v+=step){s+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${v>=1000?(v/1000)+' mil':v}</text>`}
+  days.forEach(([k,v],i)=>{
+    const x=L+i*bw, h=(H-T-B)-(y(v)-T);
+    s+=`<g class="day ${state.day===k?'sel':''}" data-day="${k}"><title>${ddmm(k)}: ${brl(v)}</title><rect x="${x}" y="${T}" width="${bw}" height="${H-T-B}" fill="transparent"/>`+
+       (v>0?`<rect class="b" x="${x+2}" y="${y(v)}" width="${bw-4}" height="${Math.max(h,1)}" rx="2"/>`:'')+
+       ((i%4===0||(i===DAYS.length-1&&i%4>2))?`<text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${ddmm(k)}</text>`:'')+`</g>`;
+  });
+  s+='</svg>';
+  const el=document.getElementById('chart'); el.innerHTML=s;
+  el.querySelectorAll('.day').forEach(g=>g.onclick=()=>{state.day = state.day===g.dataset.day?null:g.dataset.day; render();});
+}
+function setAcc(a){state.acc=a;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.acc===a));render();}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>setAcc(b.dataset.acc));
+document.getElementById('q').oninput=e=>{state.q=e.target.value;render();};
+document.getElementById('reset').onclick=()=>{overrides={};save();render();};
+render();
+</script>

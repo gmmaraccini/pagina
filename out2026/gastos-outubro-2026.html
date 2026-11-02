@@ -1,0 +1,276 @@
+<title>Gastos de Outubro 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: livro-caixa — resumo no topo, categorias como linhas de razão que abrem os lançamentos */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --fg:#17211f; --muted:#5b6a66; --line:#dbe3e0;
+  --accent:#0d6b58; --accent-soft:#e1f0eb; --neg:#b4372b; --pos:#1f7a43; --warn:#9a6400; --warn-soft:#fbf0d9;
+  --bar:#0d6b58; --bar-bg:#e6ecea;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Public Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1514; --surface:#161e1c; --fg:#e4ece9; --muted:#93a39e; --line:#2a3633;
+  --accent:#4cc3a5; --accent-soft:#16312b; --neg:#f08a7e; --pos:#6fd39a; --warn:#f0bf5c; --warn-soft:#33290f;
+  --bar:#4cc3a5; --bar-bg:#24302d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1514; --surface:#161e1c; --fg:#e4ece9; --muted:#93a39e; --line:#2a3633;
+  --accent:#4cc3a5; --accent-soft:#16312b; --neg:#f08a7e; --pos:#6fd39a; --warn:#f0bf5c; --warn-soft:#33290f;
+  --bar:#4cc3a5; --bar-bg:#24302d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1}
+h2{font-size:20px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header{display:grid;gap:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--fg);font:inherit;font-size:14px;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{font:inherit;font-size:14px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);min-width:0;flex:1 1 220px;max-width:340px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px}
+.kpi .v{font-size:22px;font-weight:500}
+.kpi .s{font-size:12.5px;color:var(--muted)}
+.neg{color:var(--neg)} .pos{color:var(--pos)}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}
+.ins{border-left:3px solid var(--accent);padding:4px 0 4px 12px;display:grid;gap:2px}
+.ins.w{border-color:var(--warn)}
+.ins b{font-size:14px} .ins span{font-size:13.5px;color:var(--muted)}
+section{display:grid;gap:12px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.sec-head p{margin:0;color:var(--muted);font-size:13.5px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 14px 6px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:560px;height:auto}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.chart .day{cursor:pointer}
+.chart .day rect.b{fill:var(--bar)}
+.chart .day:hover rect.b,.chart .day.sel rect.b{fill:var(--warn)}
+.chart .grid{stroke:var(--line)}
+.cats{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cat{border-top:1px solid var(--line)}
+.cat:first-child{border-top:0}
+.cat>button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 16px}
+.cat>button:hover{background:var(--accent-soft)}
+.cat>button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.chev{transition:transform .15s;color:var(--muted);font-size:12px}
+.cat.open .chev{transform:rotate(90deg)}
+.cname{font-weight:600;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;min-width:0}
+.cname small{font-weight:400;color:var(--muted);font-size:12.5px}
+.ctot{text-align:right;font-size:15px}
+.ctot small{display:block;color:var(--muted);font-size:11.5px}
+.cbar{grid-column:2/4;height:6px;background:var(--bar-bg);border-radius:3px;overflow:hidden}
+.cbar i{display:block;height:100%;background:var(--bar);border-radius:3px}
+.items{padding:0 16px 14px 46px;display:grid;gap:0}
+.it{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:2px 12px;padding:9px 0;border-top:1px dashed var(--line);align-items:start}
+.it .d{font-size:12.5px;color:var(--muted);padding-top:2px}
+.it .t{min-width:0}
+.it .t b{font-weight:500;display:block}
+.it .t code{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);word-break:break-word}
+.it .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;align-items:center}
+.chip{font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.w{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.chip.m{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.it select{font:inherit;font-size:12px;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);max-width:100%}
+.it .val{text-align:right;font-size:14px;padding-top:1px}
+@media (max-width:560px){.items{padding-left:16px}.it{grid-template-columns:44px minmax(0,1fr) auto}}
+.empty{padding:18px 16px;color:var(--muted)}
+.foot{font-size:13px;color:var(--muted);display:grid;gap:6px}
+.foot ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.linkbtn{all:unset;cursor:pointer;color:var(--accent);font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.filterline{font-size:13.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">01/10/2026 a 31/10/2026 · conta corrente + poupança</div>
+    <h1>Para onde foi o dinheiro em outubro</h1>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Conta">
+        <button id="acc-all" data-acc="all" aria-pressed="true">Todas</button>
+        <button id="acc-cc" data-acc="Conta corrente" aria-pressed="false">Conta corrente</button>
+        <button id="acc-pp" data-acc="Poupança" aria-pressed="false">Poupança</button>
+      </div>
+      <input type="search" id="q" placeholder="Buscar lançamento (ex.: carrefour, 99, julia)" aria-label="Buscar lançamento">
+    </div>
+    <div class="filterline" id="filterline" hidden></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+  <div class="insights" id="insights"></div>
+
+  <section>
+    <div class="sec-head"><h2>Gasto por dia</h2><p>Clique num dia para ver só os lançamentos dele.</p></div>
+    <div class="chart" id="chart"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Gastos por categoria</h2><p>Clique na categoria para ver cada gasto. Você pode mudar a categoria de qualquer item. <button class="linkbtn" id="reset">Desfazer minhas mudanças</button></p></div>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Entradas e movimentações</h2><p>Não entram na soma dos gastos.</p></div>
+    <div class="cats" id="others"></div>
+  </section>
+
+  <div class="foot">
+    <b>Observações</b>
+    <ul>
+      <li>Período pela data de lançamento no extrato. Dois PIX para Maria J feitos em 31/10 (R$ 120,00 e R$ 12,00) só foram lançados em 03/11 e ficaram fora.</li>
+      <li>As transferências “TBI 3741.28167-3” são entre a poupança e a conta corrente da mesma conta. Elas se anulam e não contam como gasto.</li>
+      <li>Regra da Maria J: PIX de R$ 300,00 vai para <b>Maria</b>; qualquer outro valor vai para <b>Julia (cuidadora)</b>.</li>
+      <li>“Cartão de crédito” é o pagamento das faturas do Itaú Gold. O que foi comprado no cartão só aparece na fatura.</li>
+      <li>Itens com a etiqueta “a confirmar” têm descrição genérica no extrato. A categoria é um palpite; ajuste se souber o que é.</li>
+      <li>Já agendados para novembro na conta corrente: Enel R$ 316,08 (04/11), IOF R$ 6,13 (04/11), Globo R$ 30,90 (05/11) e Prefeitura R$ 442,90 (16/11).</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const DATA = [{"id": 0, "date": "2026-10-01", "desc": "PGTO INSS 01846656866", "v": 7287.81, "acc": "Conta corrente", "cat": "Receitas", "note": "Benefício do INSS", "flag": null}, {"id": 1, "date": "2026-10-01", "desc": "PAG BOLETO CONDOMINIO EDIFICIO GIOTTO", "v": -2016.8, "acc": "Conta corrente", "cat": "Moradia", "note": "Boleto do condomínio Edifício Giotto", "flag": null}, {"id": 2, "date": "2026-10-01", "desc": "PAGAMENTOCONTA VIVO-SP", "v": -162.82, "acc": "Conta corrente", "cat": "Contas da casa", "note": "Conta Vivo (celular/internet)", "flag": null}, {"id": 3, "date": "2026-10-01", "desc": "PAGAMENTOCONTA VIVOFIXONAC", "v": -71.23, "acc": "Conta corrente", "cat": "Contas da casa", "note": "Telefone fixo Vivo", "flag": null}, {"id": 4, "date": "2026-10-01", "desc": "TBI 3741.28167-3", "v": -4578.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 5, "date": "2026-10-01", "desc": "PIX QRS 99 TECNOLOG01/10", "v": -18.6, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 6, "date": "2026-10-01", "desc": "JUROS LIMITE DA CONTA", "v": -9.08, "acc": "Conta corrente", "cat": "Tarifas, juros e seguros", "note": "Juros do limite da conta (cheque especial)", "flag": null}, {"id": 7, "date": "2026-10-01", "desc": "remuner basica−aniv.01", "v": 49.3, "acc": "Poupança", "cat": "Receitas", "note": "Rendimento da poupança", "flag": null}, {"id": 8, "date": "2026-10-01", "desc": "rendimento aniversário dia 01", "v": 146.12, "acc": "Poupança", "cat": "Receitas", "note": "Rendimento da poupança", "flag": null}, {"id": 9, "date": "2026-10-01", "desc": "tbi 3741.28167−3", "v": 4578.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 10, "date": "2026-10-02", "desc": "PIX QRS 99 TECNOLOG02/10", "v": -21.8, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 11, "date": "2026-10-02", "desc": "INT PRE-PAGOXXXXX 6668", "v": -25.0, "acc": "Conta corrente", "cat": "Celular pré-pago", "note": "Recarga de celular pré-pago pela internet (final 6668)", "flag": null}, {"id": 12, "date": "2026-10-02", "desc": "INT PRE-PAGOXXXXX 4872", "v": -20.0, "acc": "Conta corrente", "cat": "Celular pré-pago", "note": "Recarga de celular pré-pago pela internet (final 4872)", "flag": null}, {"id": 13, "date": "2026-10-02", "desc": "TBI 3741.28167-3", "v": 50.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 14, "date": "2026-10-02", "desc": "PIX QRS 99 TECNOLOG02/10", "v": -20.0, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 15, "date": "2026-10-02", "desc": "DEV PIX 99 TECNOLOG02/10", "v": 3.13, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Devolução da 99", "flag": null}, {"id": 16, "date": "2026-10-02", "desc": "PIX QRS 99 TECNOLOG02/10", "v": -18.4, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 17, "date": "2026-10-02", "desc": "IOF", "v": -7.63, "acc": "Conta corrente", "cat": "Tarifas, juros e seguros", "note": "IOF sobre uso do limite", "flag": null}, {"id": 18, "date": "2026-10-02", "desc": "tbi 3741.28167−3", "v": -50.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 19, "date": "2026-10-02", "desc": "pix transf maria j02/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 20, "date": "2026-10-02", "desc": "pix transf maria j02/10", "v": -100.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 21, "date": "2026-10-02", "desc": "fatura paga itau gold", "v": -1082.63, "acc": "Poupança", "cat": "Cartão de crédito", "note": "Pagamento da fatura do Itaú Gold (os itens comprados ficam na fatura)", "flag": null}, {"id": 22, "date": "2026-10-05", "desc": "TBI 3741.28167-3", "v": 50.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 23, "date": "2026-10-05", "desc": "PIX QRS 99 TECNOLOG04/10", "v": -17.6, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 24, "date": "2026-10-05", "desc": "PIX QRS 99 TECNOLOG04/10", "v": -17.6, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 25, "date": "2026-10-05", "desc": "PIX QRS 99 TECNOLOG04/10", "v": -16.1, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 26, "date": "2026-10-05", "desc": "PAY PIZZA 04/10", "v": -50.0, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Pizzaria", "flag": null}, {"id": 27, "date": "2026-10-05", "desc": "TBI 3741.28167-3", "v": 80.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 28, "date": "2026-10-05", "desc": "PAY IFD J 05/10", "v": -45.19, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "iFood (delivery)", "flag": null}, {"id": 29, "date": "2026-10-05", "desc": "DEB AUTOR GLOBO COM", "v": -30.9, "acc": "Conta corrente", "cat": "Assinaturas", "note": "Globoplay / Globo.com (débito automático)", "flag": null}, {"id": 30, "date": "2026-10-05", "desc": "tbi 3741.28167−3", "v": -80.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 31, "date": "2026-10-05", "desc": "tbi 3741.28167−3", "v": -50.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 32, "date": "2026-10-05", "desc": "pix qrs 66.363.054 05/10", "v": -75.0, "acc": "Poupança", "cat": "Outros", "note": "PIX QR para CNPJ 66.363.054 (não identificado)", "flag": "confirmar"}, {"id": 33, "date": "2026-10-05", "desc": "pix transf jose an05/10", "v": -120.0, "acc": "Poupança", "cat": "PIX para pessoas", "note": "José An. (PIX semanal de R$ 120)", "flag": null}, {"id": 34, "date": "2026-10-05", "desc": "pix transf maria j03/10", "v": -132.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 35, "date": "2026-10-05", "desc": "pix transf maria j04/10", "v": -132.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 36, "date": "2026-10-05", "desc": "pix transf maria j05/10", "v": -270.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 37, "date": "2026-10-06", "desc": "TBI 3741.28167-3", "v": 85.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 38, "date": "2026-10-06", "desc": "PIX QRS 99 TECNOLOG06/10", "v": -33.57, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 39, "date": "2026-10-06", "desc": "PAY CARRE 06/10", "v": -32.36, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 40, "date": "2026-10-06", "desc": "tbi 3741.28167−3", "v": -85.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 41, "date": "2026-10-06", "desc": "ted 237.0840.antonio m d", "v": 2600.0, "acc": "Poupança", "cat": "Receitas", "note": "TED recebida de Antonio M. D.", "flag": null}, {"id": 42, "date": "2026-10-07", "desc": "RSHOP CARREFOUR RO0710", "v": -33.09, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 43, "date": "2026-10-07", "desc": "ESTORNO RSHOP CARREFOUR RO", "v": 33.09, "acc": "Conta corrente", "cat": "Mercado", "note": "Estorno Carrefour", "flag": null}, {"id": 44, "date": "2026-10-07", "desc": "RSHOP CARREFOUR RO0710", "v": -33.09, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 45, "date": "2026-10-07", "desc": "RSHOP Conveniencia0710", "v": -213.49, "acc": "Conta corrente", "cat": "Conveniência", "note": "Loja de conveniência", "flag": null}, {"id": 46, "date": "2026-10-07", "desc": "DA ELETROPAULO 1359", "v": -233.62, "acc": "Conta corrente", "cat": "Contas da casa", "note": "Energia elétrica (Enel, antiga Eletropaulo), débito automático", "flag": null}, {"id": 47, "date": "2026-10-08", "desc": "RSHOP RESTAURANTE30810", "v": -49.18, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Restaurante", "flag": null}, {"id": 48, "date": "2026-10-09", "desc": "TBI 3741.28167-3", "v": 600.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 49, "date": "2026-10-09", "desc": "PIX TRANSF Jones G09/10", "v": -50.0, "acc": "Conta corrente", "cat": "PIX para pessoas", "note": "Jones G.", "flag": null}, {"id": 50, "date": "2026-10-09", "desc": "tbi 3741.28167−3", "v": -600.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 51, "date": "2026-10-09", "desc": "pix transf maria j09/10", "v": -117.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 52, "date": "2026-10-09", "desc": "pix transf maria j09/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 53, "date": "2026-10-09", "desc": "fatura paga itau gold", "v": -521.11, "acc": "Poupança", "cat": "Cartão de crédito", "note": "Pagamento da fatura do Itaú Gold (os itens comprados ficam na fatura)", "flag": null}, {"id": 54, "date": "2026-10-13", "desc": "TBI 3741.28167-3", "v": 45.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 55, "date": "2026-10-13", "desc": "PIX QRS 99 TECNOLOG10/10", "v": -31.6, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 56, "date": "2026-10-13", "desc": "DEV PIX 99 TECNOLOG10/10", "v": 1.1, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Devolução da 99", "flag": null}, {"id": 57, "date": "2026-10-13", "desc": "RSHOP CARREFOUR RO1110", "v": -38.22, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 58, "date": "2026-10-13", "desc": "TBI 3741.28167-3", "v": 78.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 59, "date": "2026-10-13", "desc": "ESTORNO PAY 12/10", "v": 45.19, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Estorno do iFood de 05/10 (mesmo valor)", "flag": null}, {"id": 60, "date": "2026-10-13", "desc": "SEGURO CARTAO 0000", "v": -22.54, "acc": "Conta corrente", "cat": "Tarifas, juros e seguros", "note": "Seguro do cartão / transação protegida", "flag": null}, {"id": 61, "date": "2026-10-13", "desc": "PIX QRS Lucimar Jos13/10", "v": -30.0, "acc": "Conta corrente", "cat": "PIX para pessoas", "note": "Lucimar Jos. (PIX por QR code)", "flag": null}, {"id": 62, "date": "2026-10-13", "desc": "tbi 3741.28167−3", "v": -78.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 63, "date": "2026-10-13", "desc": "tbi 3741.28167−3", "v": -45.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 64, "date": "2026-10-13", "desc": "pix qrs associacao 13/10", "v": -29.99, "acc": "Poupança", "cat": "Outros", "note": "PIX QR \"Associação\" (não identificado)", "flag": "confirmar"}, {"id": 65, "date": "2026-10-13", "desc": "pix qrs queens auto11/10", "v": -46.92, "acc": "Poupança", "cat": "Carro", "note": "Queens Auto (serviço automotivo, a confirmar)", "flag": "confirmar"}, {"id": 66, "date": "2026-10-13", "desc": "pix qrs 99 tecnolog12/10", "v": -18.1, "acc": "Poupança", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 67, "date": "2026-10-13", "desc": "pix qrs 99 tecnolog12/10", "v": -17.2, "acc": "Poupança", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 68, "date": "2026-10-13", "desc": "pix transf jose an10/10", "v": -120.0, "acc": "Poupança", "cat": "PIX para pessoas", "note": "José An. (PIX semanal de R$ 120)", "flag": null}, {"id": 69, "date": "2026-10-13", "desc": "pix transf maria j11/10", "v": -92.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 70, "date": "2026-10-13", "desc": "pix transf maria j10/10", "v": -132.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 71, "date": "2026-10-13", "desc": "pix transf maria j10/10", "v": -92.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 72, "date": "2026-10-13", "desc": "pix transf maria j13/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 73, "date": "2026-10-13", "desc": "fatura paga itau gold", "v": -1200.0, "acc": "Poupança", "cat": "Cartão de crédito", "note": "Pagamento da fatura do Itaú Gold (os itens comprados ficam na fatura)", "flag": null}, {"id": 74, "date": "2026-10-14", "desc": "RSHOP CARREFOUR RO1410", "v": -33.23, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 75, "date": "2026-10-14", "desc": "RSHOP MP BANCADEJ1410", "v": -147.0, "acc": "Conta corrente", "cat": "Compras Mercado Pago", "note": "Mercado Pago, \"Banca de J...\" (provável banca de jornal)", "flag": "confirmar"}, {"id": 76, "date": "2026-10-14", "desc": "TBI 3741.28167-3", "v": 178.88, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 77, "date": "2026-10-14", "desc": "RSHOP PIZZARIA SAN1410", "v": -40.0, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Pizzaria", "flag": null}, {"id": 78, "date": "2026-10-14", "desc": "tbi 3741.28167−3", "v": -178.88, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 79, "date": "2026-10-15", "desc": "PAY MP L 15/10", "v": -2.0, "acc": "Conta corrente", "cat": "Compras Mercado Pago", "note": "Compra pela maquininha Mercado Pago (loja não identificada no extrato)", "flag": "confirmar"}, {"id": 80, "date": "2026-10-15", "desc": "PAY MP G 15/10", "v": -60.0, "acc": "Conta corrente", "cat": "Compras Mercado Pago", "note": "Compra pela maquininha Mercado Pago (loja não identificada no extrato)", "flag": "confirmar"}, {"id": 81, "date": "2026-10-15", "desc": "PIX QRS 99 TECNOLOG15/10", "v": -19.2, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 82, "date": "2026-10-15", "desc": "TBI 3741.28167-3", "v": 150.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 83, "date": "2026-10-15", "desc": "DA PMSP 57008000000", "v": -442.9, "acc": "Conta corrente", "cat": "Impostos", "note": "Prefeitura de SP (débito automático, provável parcela do IPTU)", "flag": null}, {"id": 84, "date": "2026-10-15", "desc": "tbi 3741.28167−3", "v": -150.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 85, "date": "2026-10-15", "desc": "fatura paga itau gold", "v": -376.12, "acc": "Poupança", "cat": "Cartão de crédito", "note": "Pagamento da fatura do Itaú Gold (os itens comprados ficam na fatura)", "flag": null}, {"id": 86, "date": "2026-10-16", "desc": "TBI 3741.28167-3", "v": 420.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 87, "date": "2026-10-16", "desc": "tbi 3741.28167−3", "v": -420.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 88, "date": "2026-10-16", "desc": "pix transf jose an16/10", "v": -120.0, "acc": "Poupança", "cat": "PIX para pessoas", "note": "José An. (PIX semanal de R$ 120)", "flag": null}, {"id": 89, "date": "2026-10-16", "desc": "pix transf maria j16/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 90, "date": "2026-10-19", "desc": "PAY CARRE 17/10", "v": -39.22, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 91, "date": "2026-10-19", "desc": "PAY DROGA 17/10", "v": -53.48, "acc": "Conta corrente", "cat": "Farmácia", "note": "Drogaria", "flag": null}, {"id": 92, "date": "2026-10-19", "desc": "PAY D AVO 18/10", "v": -60.02, "acc": "Conta corrente", "cat": "Mercado", "note": "Supermercado D'Avó", "flag": null}, {"id": 93, "date": "2026-10-19", "desc": "PAY Hamil 19/10", "v": -15.8, "acc": "Conta corrente", "cat": "Outros", "note": "\"Hamil...\" no cartão (não identificado)", "flag": "confirmar"}, {"id": 94, "date": "2026-10-19", "desc": "PIX QRS 99 TECNOLOG19/10", "v": -15.2, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 95, "date": "2026-10-19", "desc": "PAY Conve 19/10", "v": -126.0, "acc": "Conta corrente", "cat": "Conveniência", "note": "Loja de conveniência", "flag": null}, {"id": 96, "date": "2026-10-19", "desc": "PAY MP G 19/10", "v": -95.7, "acc": "Conta corrente", "cat": "Compras Mercado Pago", "note": "Compra pela maquininha Mercado Pago (loja não identificada no extrato)", "flag": "confirmar"}, {"id": 97, "date": "2026-10-19", "desc": "pix transf maria j17/10", "v": -92.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 98, "date": "2026-10-19", "desc": "pix transf maria j19/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 99, "date": "2026-10-20", "desc": "PIX QRS 99 TECNOLOG20/10", "v": -25.4, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 100, "date": "2026-10-20", "desc": "DA COMGAS 03006344", "v": -52.98, "acc": "Conta corrente", "cat": "Contas da casa", "note": "Gás encanado (Comgás), débito automático", "flag": null}, {"id": 101, "date": "2026-10-20", "desc": "pix transf henriqu20/10", "v": -60.0, "acc": "Poupança", "cat": "PIX para pessoas", "note": "Henrique", "flag": null}, {"id": 102, "date": "2026-10-21", "desc": "TBI 3741.28167-3", "v": 400.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 103, "date": "2026-10-21", "desc": "PAY CARRE 21/10", "v": -58.49, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 104, "date": "2026-10-21", "desc": "TBI 3741.28167-3", "v": 120.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 105, "date": "2026-10-21", "desc": "tbi 3741.28167−3", "v": -120.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 106, "date": "2026-10-21", "desc": "tbi 3741.28167−3", "v": -400.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 107, "date": "2026-10-21", "desc": "pix transf maria j21/10", "v": -92.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 108, "date": "2026-10-21", "desc": "fatura paga itau gold", "v": -745.0, "acc": "Poupança", "cat": "Cartão de crédito", "note": "Pagamento da fatura do Itaú Gold (os itens comprados ficam na fatura)", "flag": null}, {"id": 109, "date": "2026-10-21", "desc": "ted 237.0840.antonio m d", "v": 2600.0, "acc": "Poupança", "cat": "Receitas", "note": "TED recebida de Antonio M. D.", "flag": null}, {"id": 110, "date": "2026-10-22", "desc": "PAY VILA 22/10", "v": -51.81, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Estabelecimento \"Vila\" (provável padaria/restaurante, a confirmar)", "flag": "confirmar"}, {"id": 111, "date": "2026-10-22", "desc": "TBI 3741.28167-3", "v": 100.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 112, "date": "2026-10-22", "desc": "INT PRE-PAGOXXXXX 6668", "v": -25.0, "acc": "Conta corrente", "cat": "Celular pré-pago", "note": "Recarga de celular pré-pago pela internet (final 6668)", "flag": null}, {"id": 113, "date": "2026-10-22", "desc": "INT PRE-PAGOXXXXX 6668", "v": -20.0, "acc": "Conta corrente", "cat": "Celular pré-pago", "note": "Recarga de celular pré-pago pela internet (final 6668)", "flag": null}, {"id": 114, "date": "2026-10-22", "desc": "INT PRE-PAGOXXXXX 4872", "v": -20.0, "acc": "Conta corrente", "cat": "Celular pré-pago", "note": "Recarga de celular pré-pago pela internet (final 4872)", "flag": null}, {"id": 115, "date": "2026-10-22", "desc": "TBI 3741.28167-3", "v": 100.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 116, "date": "2026-10-22", "desc": "tbi 3741.28167−3", "v": -100.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 117, "date": "2026-10-22", "desc": "tbi 3741.28167−3", "v": -100.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 118, "date": "2026-10-22", "desc": "pix transf maria j22/10", "v": -80.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 119, "date": "2026-10-22", "desc": "pix transf maria j22/10", "v": -300.0, "acc": "Poupança", "cat": "Maria", "note": "PIX para Maria (R$ 300)", "flag": null}, {"id": 120, "date": "2026-10-22", "desc": "remuner basica−aniv.22", "v": 0.3, "acc": "Poupança", "cat": "Receitas", "note": "Rendimento da poupança", "flag": null}, {"id": 121, "date": "2026-10-22", "desc": "rendimento aniversário dia 22", "v": 0.89, "acc": "Poupança", "cat": "Receitas", "note": "Rendimento da poupança", "flag": null}, {"id": 122, "date": "2026-10-23", "desc": "PAY RESTA 23/10", "v": -30.0, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Restaurante", "flag": null}, {"id": 123, "date": "2026-10-23", "desc": "pix transf jose an23/10", "v": -120.0, "acc": "Poupança", "cat": "PIX para pessoas", "note": "José An. (PIX semanal de R$ 120)", "flag": null}, {"id": 124, "date": "2026-10-26", "desc": "PAY CARRE 24/10", "v": -28.45, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 125, "date": "2026-10-26", "desc": "PAY Conve 24/10", "v": -44.0, "acc": "Conta corrente", "cat": "Conveniência", "note": "Loja de conveniência", "flag": null}, {"id": 126, "date": "2026-10-26", "desc": "PAY AUTO 24/10", "v": -121.99, "acc": "Conta corrente", "cat": "Carro", "note": "\"Auto\" no cartão (provável posto de combustível, a confirmar)", "flag": "confirmar"}, {"id": 127, "date": "2026-10-26", "desc": "PIX QRS 99 TECNOLOG24/10", "v": -23.5, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 128, "date": "2026-10-26", "desc": "PAY CARRE 24/10", "v": -52.75, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 129, "date": "2026-10-26", "desc": "RSHOP CARREFOUR RO2510", "v": -88.47, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 130, "date": "2026-10-26", "desc": "RSHOP PIZZARIA SAN2510", "v": -60.0, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Pizzaria", "flag": null}, {"id": 131, "date": "2026-10-26", "desc": "TBI 3741.28167-3", "v": 400.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 132, "date": "2026-10-26", "desc": "DEB AUTOR NETFLIX.COM", "v": -59.9, "acc": "Conta corrente", "cat": "Assinaturas", "note": "Netflix", "flag": null}, {"id": 133, "date": "2026-10-26", "desc": "tbi 3741.28167−3", "v": -400.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 134, "date": "2026-10-26", "desc": "pix qrs queens auto25/10", "v": -46.92, "acc": "Poupança", "cat": "Carro", "note": "Queens Auto (serviço automotivo, a confirmar)", "flag": "confirmar"}, {"id": 135, "date": "2026-10-26", "desc": "pix transf maria j24/10", "v": -132.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 136, "date": "2026-10-27", "desc": "pix transf maria j27/10", "v": -250.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 137, "date": "2026-10-28", "desc": "PAY CARRE 28/10", "v": -50.09, "acc": "Conta corrente", "cat": "Mercado", "note": "Carrefour", "flag": null}, {"id": 138, "date": "2026-10-28", "desc": "TBI 3741.28167-3", "v": 145.0, "acc": "Conta corrente", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 139, "date": "2026-10-28", "desc": "tbi 3741.28167−3", "v": -145.0, "acc": "Poupança", "cat": "Transferência entre contas", "note": "Movimentação entre corrente e poupança da mesma conta", "flag": null}, {"id": 140, "date": "2026-10-29", "desc": "SEG TRANSACAO PROTEGIDA 0000", "v": -7.97, "acc": "Conta corrente", "cat": "Tarifas, juros e seguros", "note": "Seguro do cartão / transação protegida", "flag": null}, {"id": 141, "date": "2026-10-29", "desc": "PIX QRS 99 TECNOLOG29/10", "v": -64.8, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 142, "date": "2026-10-29", "desc": "pix transf maria j29/10", "v": -250.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 143, "date": "2026-10-29", "desc": "pix transf maria j29/10", "v": -50.0, "acc": "Poupança", "cat": "Julia (cuidadora)", "note": "PIX para Julia, cuidadora", "flag": null}, {"id": 144, "date": "2026-10-30", "desc": "PAY RESTA 30/10", "v": -10.79, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Restaurante", "flag": null}, {"id": 145, "date": "2026-10-30", "desc": "PAY RESTA 30/10", "v": -12.9, "acc": "Conta corrente", "cat": "Alimentação fora", "note": "Restaurante", "flag": null}, {"id": 146, "date": "2026-10-30", "desc": "PIX QRS 99 TECNOLOG30/10", "v": -14.6, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}, {"id": 147, "date": "2026-10-30", "desc": "PAY MP G 30/10", "v": -45.5, "acc": "Conta corrente", "cat": "Compras Mercado Pago", "note": "Compra pela maquininha Mercado Pago (loja não identificada no extrato)", "flag": "confirmar"}, {"id": 148, "date": "2026-10-30", "desc": "PAY Conve 30/10", "v": -140.0, "acc": "Conta corrente", "cat": "Conveniência", "note": "Loja de conveniência", "flag": null}, {"id": 149, "date": "2026-10-30", "desc": "PIX QRS 99 TECNOLOG30/10", "v": -16.7, "acc": "Conta corrente", "cat": "Transporte por app", "note": "Corrida pela 99 (app de transporte)", "flag": null}];
+const SPECIAL = ['Receitas','Transferência entre contas'];
+const ALLCATS = [...new Set(DATA.map(d=>d.cat))].filter(c=>!SPECIAL.includes(c)).sort((a,b)=>a.localeCompare(b,'pt-BR')).concat(SPECIAL);
+const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const ddmm = s => s.slice(8,10)+'/'+s.slice(5,7);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let overrides = {};
+try{ overrides = JSON.parse(localStorage.getItem('gastos-out26-cat')||'{}')||{} }catch(e){ overrides = {} }
+const state = {acc:'all', q:'', day:null, open:new Set()};
+const catOf = d => overrides[d.id] || d.cat;
+function save(){ try{ localStorage.setItem('gastos-out26-cat',JSON.stringify(overrides)) }catch(e){} }
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+
+function filtered(){
+  const q = norm(state.q.trim());
+  return DATA.filter(d => (state.acc==='all'||d.acc===state.acc)
+    && (!state.day || d.date===state.day)
+    && (!q || norm(d.desc+' '+d.note+' '+catOf(d)).includes(q)));
+}
+
+function render(){
+  const rows = filtered();
+  const spend = rows.filter(d=>!SPECIAL.includes(catOf(d)));
+  const income = rows.filter(d=>catOf(d)==='Receitas');
+  const totOut = -spend.reduce((s,d)=>s+d.v,0);
+  const totIn = income.reduce((s,d)=>s+d.v,0);
+  const res = totIn - totOut;
+
+  const fl = document.getElementById('filterline');
+  const parts=[];
+  if(state.day) parts.push('dia '+ddmm(state.day));
+  if(state.q.trim()) parts.push('busca “'+esc(state.q.trim())+'”');
+  if(state.acc!=='all') parts.push(state.acc.toLowerCase());
+  fl.hidden = !parts.length;
+  fl.innerHTML = parts.length ? 'Mostrando: '+parts.join(' · ')+' &nbsp;<button class="linkbtn" id="clear">limpar filtros</button>' : '';
+  const cl=document.getElementById('clear'); if(cl) cl.onclick=()=>{state.day=null;state.q='';document.getElementById('q').value='';setAcc('all');};
+
+  document.getElementById('kpis').innerHTML = [
+    ['Entradas', brl(totIn), 'pos', income.length+' lançamentos'],
+    ['Gastos', brl(totOut), 'neg', spend.length+' lançamentos'],
+    ['Resultado', brl(res), res>=0?'pos':'neg', res>=0?'sobrou no período':'gastou mais do que entrou'],
+    ['Média por dia', brl(totOut/(state.day?1:31)), '', state.day?'no dia escolhido':'gastos ÷ 31 dias']
+  ].map(([l,v,c,s])=>`<div class="kpi"><span class="eyebrow">${l}</span><span class="v num ${c}">${v}</span><span class="s">${s}</span></div>`).join('');
+
+  // insights over full month (respecting account filter only)
+  const base = DATA.filter(d=>state.acc==='all'||d.acc===state.acc);
+  const bs = c => -base.filter(d=>catOf(d)===c).reduce((s,d)=>s+d.v,0);
+  const allOut = -base.filter(d=>!SPECIAL.includes(catOf(d))).reduce((s,d)=>s+d.v,0)||1;
+  const cuid = bs('Julia (cuidadora)')+bs('Maria');
+  const card = base.filter(d=>catOf(d)==='Cartão de crédito');
+  const juros = bs('Tarifas, juros e seguros');
+  const n99 = base.filter(d=>catOf(d)==='Transporte por app'&&d.v<0).length;
+  const conf = base.filter(d=>d.flag&&!overrides[d.id]).length;
+  const ins = [];
+  if(cuid) ins.push(['', 'Julia e Maria: '+brl(cuid), Math.round(cuid/allOut*100)+'% de todos os gastos do mês.']);
+  if(card.length) ins.push(['', card.length+' pagamentos de fatura', brl(-card.reduce((s,d)=>s+d.v,0))+' no Itaú Gold. Os itens estão na fatura, não aqui.']);
+  if(n99) ins.push(['', n99+' corridas na 99', brl(bs('Transporte por app'))+' no mês, já descontadas as devoluções.']);
+  if(juros) ins.push(['w', 'Juros, IOF e seguros: '+brl(juros), 'A corrente ficou no negativo em vários dias e pagou juros do limite.']);
+  if(conf) ins.push(['w', conf+' itens a confirmar', 'Descrição genérica no extrato. Procure a etiqueta “a confirmar”.']);
+  document.getElementById('insights').innerHTML = ins.map(([c,b,s])=>`<div class="ins ${c}"><b>${b}</b><span>${s}</span></div>`).join('');
+
+  renderChart();
+
+  // categories
+  const groups = {};
+  spend.forEach(d=>{(groups[catOf(d)] ||= []).push(d)});
+  const list = Object.entries(groups).map(([c,items])=>({c,items,t:-items.reduce((s,d)=>s+d.v,0)})).sort((a,b)=>b.t-a.t);
+  const max = Math.max(...list.map(x=>x.t),1);
+  document.getElementById('cats').innerHTML = list.length ? list.map(g=>catBlock(g, max, totOut)).join('') : '<div class="empty">Nenhum gasto com esses filtros.</div>';
+
+  const og = {};
+  rows.filter(d=>SPECIAL.includes(catOf(d))).forEach(d=>{(og[catOf(d)] ||= []).push(d)});
+  const ol = SPECIAL.filter(c=>og[c]).map(c=>({c,items:og[c],t:og[c].reduce((s,d)=>s+d.v,0),special:true}));
+  document.getElementById('others').innerHTML = ol.length ? ol.map(g=>catBlock(g,0,0)).join('') : '<div class="empty">Nada com esses filtros.</div>';
+  bind();
+}
+
+function catBlock(g,max,tot){
+  const open = state.open.has(g.c) || (state.q.trim() && g.items.length) || state.day;
+  const pct = tot? (g.t/tot*100).toFixed(1).replace('.',',')+'% dos gastos' : (g.c==='Transferência entre contas'?'saldo líquido entre as contas':'entradas');
+  const totStr = g.c==='Transferência entre contas' ? brl(g.items.filter(d=>d.v>0).reduce((s,d)=>s+d.v,0))+' em cada sentido' : brl(Math.abs(g.t));
+  const items = [...g.items].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);
+  return `<div class="cat ${open?'open':''}" data-cat="${esc(g.c)}">
+    <button aria-expanded="${open?'true':'false'}"><span class="chev">▶</span>
+      <span class="cname">${esc(g.c)} <small>${g.items.length} ${g.items.length===1?'lançamento':'lançamentos'}</small></span>
+      <span class="ctot num ${g.special&&g.c==='Receitas'?'pos':''}">${totStr}<small>${pct}</small></span>
+      ${max?`<span class="cbar"><i style="width:${(g.t/max*100).toFixed(1)}%"></i></span>`:''}
+    </button>
+    ${open?`<div class="items">${items.map(itemRow).join('')}</div>`:''}
+  </div>`;
+}
+function itemRow(d){
+  const moved = overrides[d.id] && overrides[d.id]!==d.cat;
+  return `<div class="it">
+    <span class="d num">${ddmm(d.date)}</span>
+    <div class="t"><b>${esc(d.note)}</b><code>${esc(d.desc)}</code>
+      <div class="meta"><span class="chip">${d.acc}</span>${d.flag&&!overrides[d.id]?'<span class="chip w">a confirmar</span>':''}${moved?'<span class="chip m">você mudou</span>':''}
+      <select id="sel-${d.id}" data-id="${d.id}" aria-label="Categoria">${ALLCATS.map(c=>`<option ${c===catOf(d)?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
+    </div>
+    <span class="val num ${d.v>0?'pos':''}">${d.v>0?'+':''}${brl(d.v)}</span>
+  </div>`;
+}
+function bind(){
+  document.querySelectorAll('.cat>button').forEach(b=>b.onclick=()=>{
+    const c=b.parentElement.dataset.cat; state.open.has(c)?state.open.delete(c):state.open.add(c); render();
+  });
+  document.querySelectorAll('.it select').forEach(s=>s.onchange=()=>{
+    const id=+s.dataset.id, d=DATA.find(x=>x.id===id);
+    if(s.value===d.cat) delete overrides[id]; else overrides[id]=s.value;
+    state.open.add(s.value); save(); render();
+  });
+}
+function renderChart(){
+  const base = DATA.filter(d=>(state.acc==='all'||d.acc===state.acc)&&!SPECIAL.includes(catOf(d)));
+  const q = norm(state.q.trim());
+  const days=[]; for(let i=1;i<=31;i++){const k='2026-10-'+String(i).padStart(2,'0');days.push([k,-base.filter(d=>d.date===k&&(!q||norm(d.desc+' '+d.note+' '+catOf(d)).includes(q))).reduce((s,d)=>s+d.v,0)])}
+  const W=760,H=200,L=44,B=22,T=10,R=6, mx=Math.max(...days.map(d=>d[1]),1);
+  const step = mx>2000?1000:mx>800?500:mx>300?100:50, top=Math.ceil(mx/step)*step;
+  const y=v=>T+(H-T-B)*(1-v/top), bw=(W-L-R)/31;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gasto por dia em outubro">`;
+  for(let v=0;v<=top;v+=step){s+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${v>=1000?(v/1000)+' mil':v}</text>`}
+  days.forEach(([k,v],i)=>{
+    const x=L+i*bw, h=(H-T-B)-(y(v)-T);
+    s+=`<g class="day ${state.day===k?'sel':''}" data-day="${k}"><title>${ddmm(k)}: ${brl(v)}</title><rect x="${x}" y="${T}" width="${bw}" height="${H-T-B}" fill="transparent"/>`+
+       (v>0?`<rect class="b" x="${x+2}" y="${y(v)}" width="${bw-4}" height="${Math.max(h,1)}" rx="2"/>`:'')+
+       ((i%3===0||i===30)?`<text x="${x+bw/2}" y="${H-6}" text-anchor="middle">${i+1}</text>`:'')+`</g>`;
+  });
+  s+='</svg>';
+  const el=document.getElementById('chart'); el.innerHTML=s;
+  el.querySelectorAll('.day').forEach(g=>g.onclick=()=>{state.day = state.day===g.dataset.day?null:g.dataset.day; render();});
+}
+function setAcc(a){state.acc=a;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.acc===a));render();}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>setAcc(b.dataset.acc));
+document.getElementById('q').oninput=e=>{state.q=e.target.value;render();};
+document.getElementById('reset').onclick=()=>{overrides={};save();render();};
+render();
+</script>
